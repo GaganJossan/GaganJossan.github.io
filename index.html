@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FL Coaches Corner</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px;
+        }
+
+        #logoTitleContainer {
+            display: flex;
+            align-items: center;
+            margin: 0 auto; /* Center the container */
+        }
+
+        #logoTitleContainer img {
+            width: 50px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        #searchContainer {
+            display: flex;
+            align-items: center;
+        }
+
+        #menuButton img {
+            width: 30px;
+            height: auto;
+            cursor: pointer;
+        }
+
+        #menuOverlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        #menu {
+            position: fixed;
+            top: 0;
+            left: -100%; /* Ensure the menu is completely offscreen */
+            width: 25%;
+            height: 100%;
+            background: white;
+            z-index: 1001;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+            transition: left 0.3s ease;
+        }
+
+        #menu.open {
+            left: 0; /* Slide the menu into view */
+        }
+
+        #menu h2 {
+            margin-top: 0;
+        }
+
+        #menu a {
+            display: block;
+            padding: 10px 0;
+            text-decoration: none;
+            color: black;
+        }
+
+        #menu a:hover {
+            background: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div id="menuButton">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMwAAADACAMAAAB/Pny7AAAAY1BMVEX///8AAADIyMjZ2dnPz88jIyMeHh7c3Ny9vb0/Pz8uLi7n5+egoKD6+vrS0tLx8fFsbGwMDAwzMzOCgoKIiIiqqqpnZ2dbW1u2trZxcXFHR0eZmZkoKCgVFRV8fHxPT0+QkJA02F9hAAACq0lEQVR4nO3c63aqMBCGYQQ8cEaUakGl93+V1VpX2x/ksPaPybDf5wpmVsSE5AtRBAAAAAAAAAAAgAAUdRywunDvpNqV78NlE6zL8F7uKrde0kO+Cl5+SF166QfpQt0Mvb2X8SpdpavraB2XvXSN7vaWsYkz6Qp9ZLGpl+YoXZ+fY2MamI10eX42hqGpSunqfJXz003xJl2cr7f5tUCiYLb8K09mm6mla/NXzzaTSpfmb35Rs6iRSS7Stfm6zD8zi/o3W9Q8E8VqlsxPV9PirDlIl+fnYFqbRamuVbPlbbNfS1fobm1716xKNY/N1fT0f3ezky7SldMGTXOSLtPFyfjs/1LcAt8JuN48tgHvv7ZiG6zCcQMQAAAAAAAAwLyq3gWs9tkFjNsp6/JgddnUGvNMvxSZgjjQJnPabVZzSFvae1GUODtax0XNwdnj6Mzcy5IOaBd1dB4rOmt+WBNrDBWxxmARawyVIdbYSdfmqzPEGlvp4ny1hlhjL12cr97wmpYqi89eTIszdVdOjO/PtZILZ0/D/H/Zl17T+4z1Ct0oXaI76wW6KDormWy6s72X+2xzUtBOd3LNAqbHdhqyYA1Te3S6P/ut2qbSt7HnpVtyjQAAAAAAAMA/a5I0WInrhfOvRurgzzbb2q2hajtJl+pictmjbdQc0vbWwWnGwL9r8GM/WrqpegXJ2ZeN6eD8LlZwzvSjM3+t8SZdn5+bMdYoXZ0vU6xR0VHzkynWqOKLM78ZjmkTZeHZ1WpNrDFU/0mscatqynzotrPNLCrWGKlZMb+YQlpLutgQVR/S5fn5MMcaVbxlvkyWWONZ0/uMNT6n59uT1i9PPsZGyS9tcoo1JqOCubMb55eYf6Xnw5Svg5VPh7NPrLEpkoAVPluaAAAAAAAAAAAAYfkE1AdllFVOdrYAAAAASUVORK5CYII=" alt="Menu Icon">
+        </div>
+        <div id="logoTitleContainer">
+            <img src="https://1000logos.net/wp-content/uploads/2017/08/Lululemon-Logo.png" alt="Lululemon Logo">
+            <h1>FL Coaches Corner</h1>
+        </div>
+        <div id="searchContainer">
+            <input type="text" id="searchBar" placeholder="Search by associate user ID...">
+            <button id="searchButton">Search</button>
+        </div>
+    </header>
+    <div id="menuOverlay"></div>
+    <div id="menu">
+        <h2>Menu</h2>
+        <a href="#" id="flFeedbacksOverview">FL Feedbacks Overview</a>
+    </div>
+    <main>
+        <section id="feedbackFormSection">
+            <h2>Add Feedback</h2>
+            <form id="feedbackForm">
+                <label for="dateOfCoaching">Date of Coaching:</label>
+                <input type="date" id="dateOfCoaching" required>
+                
+                <label for="flSubmitted">FL Submitted:</label>
+                <input type="text" id="flSubmitted" required>
+                
+                <label for="topicBulletPoint">Topic:</label>
+                <select id="topicBulletPoint" required>
+                    <option value="UPH">UPH</option>
+                    <option value="Shoutout">Shoutout</option>
+                    <option value="Repeat Coaching">Repeat Coaching</option>
+                    <option value="Coaching">Coaching</option>
+                    <option value="Training">Training</option>
+                </select>
+                
+                <label for="associateName">Associate User ID:</label>
+                <input type="text" id="associateName" required>
+                
+                <label for="feedbackText">Feedback:</label>
+                <textarea id="feedbackText" placeholder="Enter feedback here..." required></textarea>
+                
+                <button type="submit">Submit Feedback</button>
+            </form>
+        </section>
+        <section id="searchResults" style="display: none;">
+            <h2>Feedback Summary for <span id="summaryAssociateName"></span></h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Topic</th>
+                        <th>Sum of Events</th>
+                    </tr>
+                </thead>
+                <tbody id="feedbackSummary"></tbody>
+            </table>
+            <button id="backToMainButton">Back to Main</button>
+        </section>
+        <section id="detailView" style="display: none;">
+            <h2>Detail View</h2>
+            <table id="detailTable">
+                <thead>
+                    <tr>
+                        <th>Date Submitted</th>
+                        <th>Topic</th>
+                        <th>Feedback</th>
+                        <th>Submitted By</th>
+                        <th>Associate Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Detailed rows will be added here -->
+                </tbody>
+            </table>
+            <button id="backToSummaryButton">Back to Summary</button>
+        </section>
+        <section id="flOverviewSection" style="display: none;">
+            <h2>FL Feedbacks Overview</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>FL Name</th>
+                        <th>Total Feedback Provided</th>
+                    </tr>
+                </thead>
+                <tbody id="flOverviewBody"></tbody>
+            </table>
+            <button id="backToMainFromOverviewButton">Back to Main</button>
+        </section>
+        <section id="flDetailView" style="display: none;">
+            <h2>FL Feedback Details</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date Submitted</th>
+                        <th>Topic</th>
+                        <th>Feedback</th>
+                        <th>Submitted By</th>
+                        <th>Associate Name</th>
+                    </tr>
+                </thead>
+                <tbody id="flDetailTableBody"></tbody>
+            </table>
+            <button id="backToOverviewButton">Back to Overview</button>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
