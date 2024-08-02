@@ -229,6 +229,14 @@
           }
         });
 
+        // Event listener for pressing Enter in the search bar
+        document.getElementById('searchBar').addEventListener('keypress', (event) => {
+          if (event.key === 'Enter') {
+            event.preventDefault();
+            document.getElementById('searchButton').click();
+          }
+        });
+
         // Function to display feedback summary
         function displayFeedbackSummary(searchName, feedbacks) {
           const summaryAssociateName = document.getElementById('summaryAssociateName');
