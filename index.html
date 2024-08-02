@@ -128,131 +128,132 @@
         });
       }
 
-      // Event listener for the feedback form submission
-      document.getElementById('feedbackForm').addEventListener('submit', (event) => {
-        event.preventDefault();
+      document.addEventListener('DOMContentLoaded', () => {
+        // Event listener for the feedback form submission
+        document.getElementById('feedbackForm').addEventListener('submit', (event) => {
+          event.preventDefault();
 
-        const dateOfCoaching = document.getElementById('dateOfCoaching').value;
-        const flSubmitted = document.getElementById('flSubmitted').value.trim();
-        const topicBulletPoint = document.getElementById('topicBulletPoint').value;
-        const associateName = document.getElementById('associateName').value.trim();
-        const feedbackText = document.getElementById('feedbackText').value.trim();
+          const dateOfCoaching = document.getElementById('dateOfCoaching').value;
+          const flSubmitted = document.getElementById('flSubmitted').value.trim();
+          const topicBulletPoint = document.getElementById('topicBulletPoint').value;
+          const associateName = document.getElementById('associateName').value.trim();
+          const feedbackText = document.getElementById('feedbackText').value.trim();
 
-        if (!dateOfCoaching || !flSubmitted || !topicBulletPoint || !associateName || !feedbackText) {
-          alert('Please fill in all fields before submitting.');
-          return;
-        }
-
-        const feedback = {
-          date: new Date().toISOString().slice(0, 10),
-          flSubmitted: flSubmitted,
-          topic: topicBulletPoint,
-          associateName: associateName,
-          feedback: feedbackText
-        };
-
-        addFeedback(feedback);
-        document.getElementById('feedbackForm').reset();
-        alert('Feedback submitted successfully!');
-      });
-
-      // Event listener for search button click
-      document.getElementById('searchButton').addEventListener('click', () => {
-        const searchBar = document.getElementById('searchBar');
-        const searchName = searchBar.value.trim().toLowerCase();
-        if (searchName) {
-          fetchFeedbacks(searchName, (feedbacks) => {
-            displayFeedbackSummary(searchName, feedbacks);
-          });
-        } else {
-          alert('Please enter an associate user ID.');
-        }
-      });
-
-      // Function to display feedback summary
-      function displayFeedbackSummary(searchName, feedbacks) {
-        const summaryAssociateName = document.getElementById('summaryAssociateName');
-        const feedbackSummary = document.getElementById('feedbackSummary');
-        const searchResults = document.getElementById('searchResults');
-        const feedbackFormSection = document.getElementById('feedbackFormSection');
-        const detailView = document.getElementById('detailView');
-        const backToMainButton = document.getElementById('backToMainButton');
-        const backToSummaryButton = document.getElementById('backToSummaryButton');
-
-        // Add event listeners for navigation buttons
-        backToMainButton.addEventListener('click', () => {
-          feedbackFormSection.style.display = 'block';
-          searchResults.style.display = 'none';
-          detailView.style.display = 'none';
-        });
-
-        backToSummaryButton.addEventListener('click', () => {
-          detailView.style.display = 'none';
-          searchResults.style.display = 'block';
-        });
-
-        let displayName = searchName.charAt(0).toUpperCase() + searchName.slice(1);
-        summaryAssociateName.textContent = displayName;
-        feedbackSummary.innerHTML = '';
-        let topics = {};
-
-        feedbacks.forEach(f => {
-          if (!topics[f.topic]) {
-            topics[f.topic] = [];
+          if (!dateOfCoaching || !flSubmitted || !topicBulletPoint || !associateName || !feedbackText) {
+            alert('Please fill in all fields before submitting.');
+            return;
           }
-          topics[f.topic].push(f);
+
+          const feedback = {
+            date: new Date().toISOString().slice(0, 10),
+            flSubmitted: flSubmitted,
+            topic: topicBulletPoint,
+            associateName: associateName,
+            feedback: feedbackText
+          };
+
+          addFeedback(feedback);
+          document.getElementById('feedbackForm').reset();
+          alert('Feedback submitted successfully!');
         });
 
-        for (let topic in topics) {
-          let row = feedbackSummary.insertRow();
-          let topicCell = row.insertCell(0);
-          let button = document.createElement('button');
-          button.textContent = topic;
-          button.onclick = () => displayDetails(topics[topic]);
-          button.style.cursor = 'pointer';
-          topicCell.appendChild(button);
-          row.insertCell(1).textContent = topics[topic].length;
+        // Event listener for search button click
+        document.getElementById('searchButton').addEventListener('click', () => {
+          const searchBar = document.getElementById('searchBar');
+          const searchName = searchBar.value.trim().toLowerCase();
+          if (searchName) {
+            fetchFeedbacks(searchName, (feedbacks) => {
+              displayFeedbackSummary(searchName, feedbacks);
+            });
+          } else {
+            alert('Please enter an associate user ID.');
+          }
+        });
+
+        // Function to display feedback summary
+        function displayFeedbackSummary(searchName, feedbacks) {
+          const summaryAssociateName = document.getElementById('summaryAssociateName');
+          const feedbackSummary = document.getElementById('feedbackSummary');
+          const searchResults = document.getElementById('searchResults');
+          const feedbackFormSection = document.getElementById('feedbackFormSection');
+          const detailView = document.getElementById('detailView');
+          const backToMainButton = document.getElementById('backToMainButton');
+          const backToSummaryButton = document.getElementById('backToSummaryButton');
+
+          // Add event listeners for navigation buttons
+          backToMainButton.addEventListener('click', () => {
+            feedbackFormSection.style.display = 'block';
+            searchResults.style.display = 'none';
+            detailView.style.display = 'none';
+          });
+
+          backToSummaryButton.addEventListener('click', () => {
+            detailView.style.display = 'none';
+            searchResults.style.display = 'block';
+          });
+
+          let displayName = searchName.charAt(0).toUpperCase() + searchName.slice(1);
+          summaryAssociateName.textContent = displayName;
+          feedbackSummary.innerHTML = '';
+          let topics = {};
+
+          feedbacks.forEach(f => {
+            if (!topics[f.topic]) {
+              topics[f.topic] = [];
+            }
+            topics[f.topic].push(f);
+          });
+
+          for (let topic in topics) {
+            let row = feedbackSummary.insertRow();
+            let topicCell = row.insertCell(0);
+            let button = document.createElement('button');
+            button.textContent = topic;
+            button.onclick = () => displayDetails(topics[topic]);
+            button.style.cursor = 'pointer';
+            topicCell.appendChild(button);
+            row.insertCell(1).textContent = topics[topic].length;
+          }
+
+          searchResults.style.display = 'block';
+          feedbackFormSection.style.display = 'none';
         }
 
-        searchResults.style.display = 'block';
-        feedbackFormSection.style.display = 'none';
-      }
+        // Function to display detailed feedback
+        function displayDetails(topicFeedbacks) {
+          const detailTableBody = document.querySelector('#detailTable tbody');
+          const detailView = document.getElementById('detailView');
+          const searchResults = document.getElementById('searchResults');
 
-      // Function to display detailed feedback
-      function displayDetails(topicFeedbacks) {
-        const detailTableBody = document.querySelector('#detailTable tbody');
-        const detailView = document.getElementById('detailView');
-        const searchResults = document.getElementById('searchResults');
+          detailTableBody.innerHTML = '';
+          topicFeedbacks.forEach(f => {
+            let row = detailTableBody.insertRow();
+            row.insertCell(0).textContent = f.date;
+            row.insertCell(1).textContent = f.topic;
+            row.insertCell(2).textContent = f.feedback;
+            row.insertCell(3).textContent = f.flSubmitted;
+            row.insertCell(4).textContent = f.associateName;
+          });
 
-        detailTableBody.innerHTML = '';
-        topicFeedbacks.forEach(f => {
-          let row = detailTableBody.insertRow();
-          row.insertCell(0).textContent = f.date;
-          row.insertCell(1).textContent = f.topic;
-          row.insertCell(2).textContent = f.feedback;
-          row.insertCell(3).textContent = f.flSubmitted;
-          row.insertCell(4).textContent = f.associateName;
+          detailView.style.display = 'block';
+          searchResults.style.display = 'none';
+        }
+
+        // Menu button functionality
+        const menuButton = document.getElementById('menuButton');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const menu = document.getElementById('menu');
+
+        menuButton.addEventListener('click', () => {
+          menu.classList.toggle('open');
+          menuOverlay.style.display = menu.classList.contains('open') ? 'block' : 'none';
         });
 
-        detailView.style.display = 'block';
-        searchResults.style.display = 'none';
-      }
-
-      // Menu button functionality
-      const menuButton = document.getElementById('menuButton');
-      const menuOverlay = document.getElementById('menuOverlay');
-      const menu = document.getElementById('menu');
-
-      menuButton.addEventListener('click', () => {
-        menu.classList.toggle('open');
-        menuOverlay.style.display = menu.classList.contains('open') ? 'block' : 'none';
+        menuOverlay.addEventListener('click', () => {
+          menu.classList.remove('open');
+          menuOverlay.style.display = 'none';
+        });
       });
-
-      menuOverlay.addEventListener('click', () => {
-        menu.classList.remove('open');
-        menuOverlay.style.display = 'none';
-      });
-
     </script>
 </body>
 </html>
