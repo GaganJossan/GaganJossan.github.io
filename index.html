@@ -48,6 +48,37 @@
                 <button type="submit">Submit Feedback</button>
             </form>
         </section>
+        <section id="searchResults" style="display: none;">
+            <h2>Feedback Summary for <span id="summaryAssociateName"></span></h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Topic</th>
+                        <th>Sum of Events</th>
+                    </tr>
+                </thead>
+                <tbody id="feedbackSummary"></tbody>
+            </table>
+            <button id="backToMainButton">Back to Main</button>
+        </section>
+        <section id="detailView" style="display: none;">
+            <h2>Detail View</h2>
+            <table id="detailTable">
+                <thead>
+                    <tr>
+                        <th>Date Submitted</th>
+                        <th>Topic</th>
+                        <th>Feedback</th>
+                        <th>Submitted By</th>
+                        <th>Associate Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Detailed rows will be added here -->
+                </tbody>
+            </table>
+            <button id="backToSummaryButton">Back to Summary</button>
+        </section>
     </main>
     <script type="module">
       // Import the functions you need from the SDKs you need
