@@ -6,81 +6,11 @@
     <title>FL Coaches Corner</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 40px;
-        }
-
-        #logoTitleContainer {
-            display: flex;
-            align-items: center;
-            margin: 0 auto; /* Center the container */
-        }
-
-        #logoTitleContainer img {
-            width: 50px;
-            height: auto;
-            margin-right: 10px;
-        }
-
-        #searchContainer {
-            display: flex;
-            align-items: center;
-        }
-
-        #menuButton img {
-            width: 30px;
-            height: auto;
-            cursor: pointer;
-        }
-
-        #menuOverlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-        }
-
-        #menu {
-            position: fixed;
-            top: 0;
-            left: -100%; /* Ensure the menu is completely offscreen */
-            width: 25%;
-            height: 100%;
-            background: white;
-            z-index: 1001;
-            padding: 20px;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
-            transition: left 0.3s ease;
-        }
-
-        #menu.open {
-            left: 0; /* Slide the menu into view */
-        }
-
-        #menu h2 {
-            margin-top: 0;
-        }
-
-        #menu a {
-            display: block;
-            padding: 10px 0;
-            text-decoration: none;
-            color: black;
-        }
-
-        #menu a:hover {
-            background: #f1f1f1;
-        }
+        /* Your existing styles */
     </style>
 </head>
 <body>
+    <!-- Your existing HTML content -->
     <header>
         <div id="menuButton">
             <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMwAAADACAMAAAB/Pny7AAAAY1BMVEX///8AAADIyMjZ2dnPz88jIyMeHh7c3Ny9vb0/Pz8uLi7n5+egoKD6+vrS0tLx8fFsbGwMDAwzMzOCgoKIiIiqqqpnZ2dbW1u2trZxcXFHR0eZmZkoKCgVFRV8fHxPT0+QkJA02F9hAAACq0lEQVR4nO3c63aqMBCGYQQ8cEaUakGl93+V1VpX2x/ksPaPybDf5wpmVsSE5AtRBAAAAAAAAAAAgAAUdRywunDvpNqV78NlE6zL8F7uKrde0kO+Cl5+SF166QfpQt0Mvb2X8SpdpavraB2XvXSN7vaWsYkz6Qp9ZLGpl+YoXZ+fY2MamI10eX42hqGpSunqfJXz003xJl2cr7f5tUCiYLb8K09mm6mla/NXzzaTSpfmb35Rs6iRSS7Stfm6zD8zi/o3W9Q8E8VqlsxPV9PirDlIl+fnYFqbRamuVbPlbbNfS1fobm1716xKNY/N1fT0f3ezky7SldMGTXOSLtPFyfjs/1LcAt8JuN48tgHvv7ZiG6zCcQMQAAAAAAAAwLyq3gWs9tkFjNsp6/JgddnUGvNMvxSZgjjQJnPabVZzSFvae1GUODtax0XNwdnj6Mzcy5IOaBd1dB4rOmt+WBNrDBWxxmARawyVIdbYSdfmqzPEGlvp4ny1hlhjL12cr97wmpYqi89eTIszdVdOjO/PtZILZ0/D/H/Zl17T+4z1Ct0oXaI76wW6KDormWy6s72X+2xzUtBOd3LNAqbHdhqyYA1Te3S6P/ut2qbSt7HnpVtyjQAAAAAAAMA/a5I0WInrhfOvRurgzzbb2q2hajtJl+pictmjbdQc0vbWwWnGwL9r8GM/WrqpegXJ2ZeN6eD8LlZwzvSjM3+t8SZdn5+bMdYoXZ0vU6xR0VHzkynWqOKLM78ZjmkTZeHZ1WpNrDFU/0mscatqynzotrPNLCrWGKlZMb+YQlpLutgQVR/S5fn5MMcaVbxlvkyWWONZ0/uMNT6n59uT1i9PPsZGyS9tcoo1JqOCubMb55eYf6Xnw5Svg5VPh7NPrLEpkoAVPluaAAAAAAAAAAAAYfkE1AdllFVOdrYAAAAASUVORK5CYII=" alt="Menu Icon">
@@ -188,6 +118,142 @@
             <button id="backToOverviewButton">Back to Overview</button>
         </section>
     </main>
-    <script src="script.js"></script>
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-analytics.js";
+      import { getDatabase, ref, set, push, onValue, orderByChild, query, startAt, endAt } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
+
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyDvkJUQFsAGDQNY__TmKUvom7HkvK_OEsI",
+        authDomain: "fl-coaches-corner.firebaseapp.com",
+        projectId: "fl-coaches-corner",
+        storageBucket: "fl-coaches-corner.appspot.com",
+        messagingSenderId: "748798786709",
+        appId: "1:748798786709:web:dc7bf765761812489e6f9c",
+        measurementId: "G-G0RY03B6D3"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const database = getDatabase(app);
+
+      // Reference to feedback data in Firebase
+      const feedbackRef = ref(database, 'feedbacks');
+
+      // Add feedback to Firebase
+      function addFeedback(feedback) {
+        push(feedbackRef, feedback);
+      }
+
+      // Fetch feedbacks from Firebase based on associateName
+      function fetchFeedbacks(associateName, callback) {
+        const feedbackQuery = query(feedbackRef, orderByChild('associateName'), startAt(associateName), endAt(associateName + "\uf8ff"));
+        onValue(feedbackQuery, (snapshot) => {
+          const feedbacks = [];
+          snapshot.forEach((childSnapshot) => {
+            feedbacks.push(childSnapshot.val());
+          });
+          callback(feedbacks);
+        });
+      }
+
+      // Event listener for the feedback form submission
+      document.getElementById('feedbackForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const dateOfCoaching = document.getElementById('dateOfCoaching').value;
+        const flSubmitted = document.getElementById('flSubmitted').value.trim();
+        const topicBulletPoint = document.getElementById('topicBulletPoint').value;
+        const associateName = document.getElementById('associateName').value.trim();
+        const feedbackText = document.getElementById('feedbackText').value.trim();
+
+        if (!dateOfCoaching || !flSubmitted || !topicBulletPoint || !associateName || !feedbackText) {
+          alert('Please fill in all fields before submitting.');
+          return;
+        }
+
+        const feedback = {
+          date: new Date().toISOString().slice(0, 10),
+          flSubmitted: flSubmitted,
+          topic: topicBulletPoint,
+          associateName: associateName,
+          feedback: feedbackText
+        };
+
+        addFeedback(feedback);
+        document.getElementById('feedbackForm').reset();
+        alert('Feedback submitted successfully!');
+      });
+
+      // Event listener for search button click
+      document.getElementById('searchButton').addEventListener('click', () => {
+        const searchBar = document.getElementById('searchBar');
+        const searchName = searchBar.value.trim().toLowerCase();
+        if (searchName) {
+          fetchFeedbacks(searchName, (feedbacks) => {
+            displayFeedbackSummary(searchName, feedbacks);
+          });
+        } else {
+          alert('Please enter an associate user ID.');
+        }
+      });
+
+      // Function to display feedback summary
+      function displayFeedbackSummary(searchName, feedbacks) {
+        const summaryAssociateName = document.getElementById('summaryAssociateName');
+        const feedbackSummary = document.getElementById('feedbackSummary');
+        const searchResults = document.getElementById('searchResults');
+        const feedbackFormSection = document.getElementById('feedbackFormSection');
+
+        let displayName = searchName.charAt(0).toUpperCase() + searchName.slice(1);
+        summaryAssociateName.textContent = displayName;
+        feedbackSummary.innerHTML = '';
+        let topics = {};
+
+        feedbacks.forEach(f => {
+          if (!topics[f.topic]) {
+            topics[f.topic] = [];
+          }
+          topics[f.topic].push(f);
+        });
+
+        for (let topic in topics) {
+          let row = feedbackSummary.insertRow();
+          let topicCell = row.insertCell(0);
+          let button = document.createElement('button');
+          button.textContent = topic;
+          button.onclick = () => displayDetails(topics[topic]);
+          button.style.cursor = 'pointer';
+          topicCell.appendChild(button);
+          row.insertCell(1).textContent = topics[topic].length;
+        }
+
+        searchResults.style.display = 'block';
+        feedbackFormSection.style.display = 'none';
+      }
+
+      // Function to display detailed feedback
+      function displayDetails(topicFeedbacks) {
+        const detailTableBody = document.querySelector('#detailTable tbody');
+        const detailView = document.getElementById('detailView');
+        const searchResults = document.getElementById('searchResults');
+
+        detailTableBody.innerHTML = '';
+        topicFeedbacks.forEach(f => {
+          let row = detailTableBody.insertRow();
+          row.insertCell(0).textContent = f.date;
+          row.insertCell(1).textContent = f.topic;
+          row.insertCell(2).textContent = f.feedback;
+          row.insertCell(3).textContent = f.flSubmitted;
+          row.insertCell(4).textContent = f.associateName;
+        });
+
+        detailView.style.display = 'block';
+        searchResults.style.display = 'none';
+      }
+    </script>
 </body>
 </html>
