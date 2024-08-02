@@ -106,3 +106,63 @@ button {
 button:hover {
     background-color: #004499;
 }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background-color: #f1f1f1;
+}
+
+/* Menu styles */
+#menuOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+#menu {
+    position: fixed;
+    top: 0;
+    left: -100%; /* Ensure the menu is completely offscreen */
+    width: 25%;
+    height: 100%;
+    background: white;
+    z-index: 1001;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    transition: left 0.3s ease;
+}
+
+#menu.open {
+    left: 0; /* Slide the menu into view */
+}
+
+#menu h2 {
+    margin-top: 0;
+}
+
+#menu a {
+    display: block;
+    padding: 10px 0;
+    text-decoration: none;
+    color: black;
+}
+
+#menu a:hover {
+    background: #f1f1f1;
+}
