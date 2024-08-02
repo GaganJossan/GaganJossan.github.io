@@ -170,21 +170,6 @@
         const feedbackSummary = document.getElementById('feedbackSummary');
         const searchResults = document.getElementById('searchResults');
         const feedbackFormSection = document.getElementById('feedbackFormSection');
-        const detailView = document.getElementById('detailView');
-        const backToMainButton = document.getElementById('backToMainButton');
-        const backToSummaryButton = document.getElementById('backToSummaryButton');
-
-        // Add event listeners for navigation buttons
-        backToMainButton.addEventListener('click', () => {
-          feedbackFormSection.style.display = 'block';
-          searchResults.style.display = 'none';
-          detailView.style.display = 'none';
-        });
-
-        backToSummaryButton.addEventListener('click', () => {
-          detailView.style.display = 'none';
-          searchResults.style.display = 'block';
-        });
 
         let displayName = searchName.charAt(0).toUpperCase() + searchName.slice(1);
         summaryAssociateName.textContent = displayName;
@@ -232,22 +217,6 @@
         detailView.style.display = 'block';
         searchResults.style.display = 'none';
       }
-
-      // Menu button functionality
-      const menuButton = document.getElementById('menuButton');
-      const menuOverlay = document.getElementById('menuOverlay');
-      const menu = document.getElementById('menu');
-
-      menuButton.addEventListener('click', () => {
-        menu.classList.toggle('open');
-        menuOverlay.style.display = menu.classList.contains('open') ? 'block' : 'none';
-      });
-
-      menuOverlay.addEventListener('click', () => {
-        menu.classList.remove('open');
-        menuOverlay.style.display = 'none';
-      });
-
     </script>
 </body>
 </html>
