@@ -10,141 +10,99 @@ header {
     color: white;
     padding: 40px;
     text-align: center;
-    position: relative;  /* For positioning the search container */
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 #menuButton {
     position: absolute;
-    left: 20px; /* Adjust based on your header layout */
+    left: 20px;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
 }
 
+#logoTitleContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+}
+
+#logoImage {
+    max-width: 200px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
 #searchContainer {
     position: absolute;
-    top: 110px;  /* Adjusted to lower the search bar */
     right: 20px;
-    display: flex;  /* Aligns children (search bar and button) in a row */
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
 }
 
 #searchBar, #searchButton {
-    padding: 8px;  /* Uniform padding for search bar and button */
-    margin-right: 5px; /* Space between search bar and button */
+    padding: 8px;
+    margin-right: 5px;
 }
 
 #searchBar {
-    width: 200px;  /* Smaller width for the search bar */
-    border-radius: 5px; /* Rounded corners for the search bar */
-    border: 1px solid #ccc; /* Subtle border for the search bar */
+    width: 200px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }
 
 #searchButton {
-    background-color: #0084ff; /* Bright blue background for the button */
-    border: none;  /* No border for a cleaner button appearance */
-    color: white;  /* Text color for the button */
-    cursor: pointer;  /* Pointer cursor on hover */
-    border-radius: 5px; /* Rounded corners for the button */
+    background-color: #0084ff;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
 #searchButton:hover {
-    background-color: #0056b3; /* Darker blue on hover for the button */
+    background-color: #0056b3;
 }
 
 main {
     padding: 20px;
     max-width: 1200px;
-    margin: 0 auto; /* Centers the main content horizontally */
+    margin: 0 auto;
 }
 
 form {
     background: #ffffff;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Soft shadow around the form */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-top: 20px;
 }
 
 label {
-    display: block; /* Each label on a new line */
-    margin: 10px 0; /* Margin around labels for spacing */
+    display: block;
+    margin: 10px 0;
 }
 
 input, select, textarea, button {
-    width: 100%; /* Full width for form elements */
-    padding: 10px; /* Padding inside form elements */
-    margin-top: 5px; /* Space above each form element */
-    border: 1px solid #ccc; /* Uniform border for form elements */
-    border-radius: 4px; /* Slightly rounded corners for form elements */
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 button {
-    background-color: #0066cc; /* Consistent button color */
-    color: white; /* White text for readability */
-    border: none; /* No border for buttons */
-    cursor: pointer; /* Indicates clickable buttons */
-    transition: background 0.3s; /* Smooth transition for background color */
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
 }
 
 button:hover {
-    background-color: #004499; /* Darker background on hover */
-}
-
-table {
-    width: 100%; /* Full width tables */
-    border-collapse: collapse; /* Collapsed borders for a cleaner table */
-    margin-top: 20px; /* Space above the table */
-}
-
-th, td {
-    padding: 12px; /* Padding in table cells for spacing */
-    border: 1px solid #ddd; /* Light border for table cells */
-    text-align: left; /* Align text to the left in table cells */
-}
-
-th {
-    background-color: #f1f1f1; /* Light gray background for table headers */
-}
-
-/* Menu styles */
-#menuOverlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-}
-
-#menu {
-    position: fixed;
-    top: 0;
-    left: -100%; /* Ensure the menu is completely offscreen */
-    width: 25%;
-    height: 100%;
-    background: white;
-    z-index: 1001;
-    padding: 20px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
-    transition: left 0.3s ease;
-}
-
-#menu.open {
-    left: 0; /* Slide the menu into view */
-}
-
-#menu h2 {
-    margin-top: 0;
-}
-
-#menu a {
-    display: block;
-    padding: 10px 0;
-    text-decoration: none;
-    color: black;
-}
-
-#menu a:hover {
-    background: #f1f1f1;
+    background-color: #004499;
 }
