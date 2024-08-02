@@ -97,6 +97,22 @@
             </table>
             <button id="backToMainFromOverviewButton">Back to Main</button>
         </section>
+        <section id="flDetailView" style="display: none;">
+            <h2>FL Feedback Details</h2>
+            <table id="flDetailTable">
+                <thead>
+                    <tr>
+                        <th>Date Submitted</th>
+                        <th>Topic</th>
+                        <th>Feedback</th>
+                        <th>Submitted By</th>
+                        <th>Associate Name</th>
+                    </tr>
+                </thead>
+                <tbody id="flDetailTableBody"></tbody>
+            </table>
+            <button id="backToOverviewButton">Back to Overview</button>
+        </section>
     </main>
     <script type="module">
       // Import the functions you need from the SDKs you need
@@ -154,6 +170,18 @@
             flFeedbacks[flName].count++;
           });
           callback(flFeedbacks);
+        });
+      }
+
+      // Fetch detailed feedback for a specific FL
+      function fetchFLDetails(flName, callback) {
+        const feedbackQuery = query(feedbackRef, orderByChild('flSubmitted'), startAt(flName), endAt(flName + "\uf8ff"));
+        onValue(feedbackQuery, (snapshot) => {
+          const feedbacks = [];
+          snapshot.forEach((childSnapshot) => {
+            feedbacks.push(childSnapshot.val());
+          });
+          callback(feedbacks);
         });
       }
 
@@ -309,7 +337,12 @@
           flOverviewBody.innerHTML = '';
           for (let fl in flFeedbacks) {
             let row = flOverviewBody.insertRow();
-            row.insertCell(0).textContent = flFeedbacks[fl].name;
+            let flCell = row.insertCell(0);
+            let button = document.createElement('button');
+            button.textContent = flFeedbacks[fl].name;
+            button.onclick = () => displayFLDetails(flFeedbacks[fl].name);
+            button.style.cursor = 'pointer';
+            flCell.appendChild(button);
             row.insertCell(1).textContent = flFeedbacks[fl].count;
           }
 
@@ -317,6 +350,35 @@
           feedbackFormSection.style.display = 'none';
           searchResults.style.display = 'none';
           detailView.style.display = 'none';
+        }
+
+        // Function to display detailed feedback for a specific FL
+        function displayFLDetails(flName) {
+          fetchFLDetails(flName, (feedbacks) => {
+            const flDetailView = document.getElementById('flDetailView');
+            const flDetailTableBody = document.getElementById('flDetailTableBody');
+            const flOverviewSection = document.getElementById('flOverviewSection');
+            const backToOverviewButton = document.getElementById('backToOverviewButton');
+
+            // Add event listener for back button
+            backToOverviewButton.addEventListener('click', () => {
+              flDetailView.style.display = 'none';
+              flOverviewSection.style.display = 'block';
+            });
+
+            flDetailTableBody.innerHTML = '';
+            feedbacks.forEach(f => {
+              let row = flDetailTableBody.insertRow();
+              row.insertCell(0).textContent = f.date;
+              row.insertCell(1).textContent = f.topic;
+              row.insertCell(2).textContent = f.feedback;
+              row.insertCell(3).textContent = f.flSubmitted;
+              row.insertCell(4).textContent = f.associateName;
+            });
+
+            flDetailView.style.display = 'block';
+            flOverviewSection.style.display = 'none';
+          });
         }
       });
     </script>
