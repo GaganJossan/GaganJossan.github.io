@@ -84,6 +84,19 @@
             </table>
             <button id="backToSummaryButton">Back to Summary</button>
         </section>
+        <section id="flOverviewSection" style="display: none;">
+            <h2>FL Feedbacks Overview</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>FL Name</th>
+                        <th>Total Feedback Provided</th>
+                    </tr>
+                </thead>
+                <tbody id="flOverviewBody"></tbody>
+            </table>
+            <button id="backToMainFromOverviewButton">Back to Main</button>
+        </section>
     </main>
     <script type="module">
       // Import the functions you need from the SDKs you need
@@ -125,6 +138,22 @@
             feedbacks.push(childSnapshot.val());
           });
           callback(feedbacks);
+        });
+      }
+
+      // Fetch FL feedback overview
+      function fetchFLFeedbacksOverview(callback) {
+        onValue(feedbackRef, (snapshot) => {
+          const flFeedbacks = {};
+          snapshot.forEach((childSnapshot) => {
+            const feedback = childSnapshot.val();
+            const flName = feedback.flSubmitted.toLowerCase();
+            if (!flFeedbacks[flName]) {
+              flFeedbacks[flName] = { name: feedback.flSubmitted, count: 0 };
+            }
+            flFeedbacks[flName].count++;
+          });
+          callback(flFeedbacks);
         });
       }
 
@@ -253,6 +282,42 @@
           menu.classList.remove('open');
           menuOverlay.style.display = 'none';
         });
+
+        // Event listener for FL Feedbacks Overview link
+        document.getElementById('flFeedbacksOverview').addEventListener('click', (event) => {
+          event.preventDefault();
+          fetchFLFeedbacksOverview((flFeedbacks) => {
+            displayFLFeedbacksOverview(flFeedbacks);
+          });
+        });
+
+        // Function to display FL feedback overview
+        function displayFLFeedbacksOverview(flFeedbacks) {
+          const flOverviewSection = document.getElementById('flOverviewSection');
+          const feedbackFormSection = document.getElementById('feedbackFormSection');
+          const searchResults = document.getElementById('searchResults');
+          const detailView = document.getElementById('detailView');
+          const flOverviewBody = document.getElementById('flOverviewBody');
+          const backToMainFromOverviewButton = document.getElementById('backToMainFromOverviewButton');
+
+          // Add event listener for back button
+          backToMainFromOverviewButton.addEventListener('click', () => {
+            flOverviewSection.style.display = 'none';
+            feedbackFormSection.style.display = 'block';
+          });
+
+          flOverviewBody.innerHTML = '';
+          for (let fl in flFeedbacks) {
+            let row = flOverviewBody.insertRow();
+            row.insertCell(0).textContent = flFeedbacks[fl].name;
+            row.insertCell(1).textContent = flFeedbacks[fl].count;
+          }
+
+          flOverviewSection.style.display = 'block';
+          feedbackFormSection.style.display = 'none';
+          searchResults.style.display = 'none';
+          detailView.style.display = 'none';
+        }
       });
     </script>
 </body>
