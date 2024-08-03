@@ -57,6 +57,7 @@
         </section>
         <section id="searchResults" style="display: none;">
             <h2>Feedback Summary for <span id="summaryAssociateName"></span></h2>
+            <div id="errorMessage" style="display: none; color: red;">No data found for the given associate name.</div>
             <table>
                 <thead>
                     <tr>
@@ -248,6 +249,7 @@
           const flDetailView = document.getElementById('flDetailView');
           const backToMainButton = document.getElementById('backToMainButton');
           const backToSummaryButton = document.getElementById('backToSummaryButton');
+          const errorMessage = document.getElementById('errorMessage');
 
           // Add event listeners for navigation buttons
           backToMainButton.addEventListener('click', () => {
@@ -263,28 +265,34 @@
             searchResults.style.display = 'block';
           });
 
-          let displayName = searchName.charAt(0).toUpperCase() + searchName.slice(1);
-          summaryAssociateName.textContent = displayName;
-          feedbackSummary.innerHTML = '';
-          let topics = {};
+          if (feedbacks.length === 0) {
+            errorMessage.style.display = 'block';
+            feedbackSummary.innerHTML = '';
+          } else {
+            errorMessage.style.display = 'none';
+            let displayName = searchName.charAt(0).toUpperCase() + searchName.slice(1);
+            summaryAssociateName.textContent = displayName;
+            feedbackSummary.innerHTML = '';
+            let topics = {};
 
-          feedbacks.forEach(f => {
-            if (!topics[f.topic]) {
-              topics[f.topic] = [];
+            feedbacks.forEach(f => {
+              if (!topics[f.topic]) {
+                topics[f.topic] = [];
+              }
+              topics[f.topic].push(f);
+            });
+
+            for (let topic in topics) {
+              let row = feedbackSummary.insertRow();
+              let topicCell = row.insertCell(0);
+              let button = document.createElement('button');
+              button.textContent = topic;
+              button.onclick = () => displayDetails(topics[topic]);
+              button.style.cursor = 'pointer';
+              button.className = 'topicButton'; // Added class for styling
+              topicCell.appendChild(button);
+              row.insertCell(1).textContent = topics[topic].length;
             }
-            topics[f.topic].push(f);
-          });
-
-          for (let topic in topics) {
-            let row = feedbackSummary.insertRow();
-            let topicCell = row.insertCell(0);
-            let button = document.createElement('button');
-            button.textContent = topic;
-            button.onclick = () => displayDetails(topics[topic]);
-            button.style.cursor = 'pointer';
-            button.className = 'topicButton'; // Added class for styling
-            topicCell.appendChild(button);
-            row.insertCell(1).textContent = topics[topic].length;
           }
 
           searchResults.style.display = 'block';
