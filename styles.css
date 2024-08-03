@@ -188,17 +188,6 @@ th {
     padding-left: 20px; /* Add a bit of padding on hover for effect */
 }
 
-/* Chart container */
-.chart-container {
-    width: 100%;
-    margin: 20px 0;
-}
-
-canvas {
-    width: 100% !important;
-    height: 400px !important;
-}
-
 /* Additional styling for buttons in tables */
 .topicButton {
     background-color: #0084ff;
@@ -226,4 +215,32 @@ canvas {
 
 .flButton:hover {
     background-color: #0056b3;
+}
+
+/* Styling for FL Feedbacks Overview cards */
+#flOverviewCards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.fl-card {
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    padding: 20px;
+    flex: 1 1 calc(33.333% - 20px);
+    max-width: calc(33.333% - 20px);
+    text-align: center;
+}
+
+.fl-card h3 {
+    margin-top: 0;
+    font-size: 1.5em;
+}
+
+.fl-card p {
+    font-size: 1.2em;
+    margin: 10px 0;
 }
