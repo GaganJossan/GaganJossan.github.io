@@ -262,7 +262,7 @@
         // Event listener for search button click
         document.getElementById('searchButton').addEventListener('click', () => {
           const searchBar = document.getElementById('searchBar');
-          const searchName = searchBar.value.trim().toLowerCase();
+          const searchName = searchBar.value.trim();
           if (searchName) {
             fetchFeedbacks(searchName, (feedbacks) => {
               displayFeedbackSummary(searchName, feedbacks);
@@ -504,8 +504,8 @@
             associateCount.textContent = `Total Feedback Provided: ${associateFeedbacks[associate].count}`;
             let button = document.createElement('button');
             button.textContent = 'View Details';
-            button.onclick = () => fetchFeedbacks(associateFeedbacks[associate].name.toLowerCase(), (feedbacks) => {
-              displayFeedbackSummary(associateFeedbacks[associate].name.toLowerCase(), feedbacks);
+            button.onclick = () => fetchFeedbacks(associateFeedbacks[associate].name, (feedbacks) => {
+              displayFeedbackSummary(associateFeedbacks[associate].name, feedbacks);
             });
             button.className = 'associateButton';
 
