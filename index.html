@@ -278,6 +278,7 @@
             button.textContent = topic;
             button.onclick = () => displayDetails(topics[topic]);
             button.style.cursor = 'pointer';
+            button.className = 'topicButton'; // Added class for styling
             topicCell.appendChild(button);
             row.insertCell(1).textContent = topics[topic].length;
           }
@@ -352,6 +353,7 @@
             button.textContent = flFeedbacks[fl].name;
             button.onclick = () => displayFLDetails(flFeedbacks[fl].name);
             button.style.cursor = 'pointer';
+            button.className = 'flButton'; // Added class for styling
             flCell.appendChild(button);
             row.insertCell(1).textContent = flFeedbacks[fl].count;
           }
