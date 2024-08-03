@@ -216,8 +216,8 @@
           alert('Feedback submitted successfully!');
         });
 
-        // Function to handle search and display feedback summary
-        function handleSearch() {
+        // Event listener for search button click
+        document.getElementById('searchButton').addEventListener('click', () => {
           const searchBar = document.getElementById('searchBar');
           const searchName = searchBar.value.trim().toLowerCase();
           if (searchName) {
@@ -227,16 +227,13 @@
           } else {
             alert('Please enter an associate user ID.');
           }
-        }
-
-        // Event listener for search button click
-        document.getElementById('searchButton').addEventListener('click', handleSearch);
+        });
 
         // Event listener for pressing Enter in the search bar
         document.getElementById('searchBar').addEventListener('keypress', (event) => {
           if (event.key === 'Enter') {
             event.preventDefault();
-            handleSearch();
+            document.getElementById('searchButton').click();
           }
         });
 
@@ -247,8 +244,8 @@
           const searchResults = document.getElementById('searchResults');
           const feedbackFormSection = document.getElementById('feedbackFormSection');
           const flOverviewSection = document.getElementById('flOverviewSection');
-          const flDetailView = document.getElementById('flDetailView');
           const detailView = document.getElementById('detailView');
+          const flDetailView = document.getElementById('flDetailView');
           const backToMainButton = document.getElementById('backToMainButton');
           const backToSummaryButton = document.getElementById('backToSummaryButton');
 
