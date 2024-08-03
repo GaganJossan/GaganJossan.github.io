@@ -217,27 +217,42 @@ th {
     background-color: #0056b3;
 }
 
-/* Styling for FL Feedbacks Overview cards */
-#flOverviewCards {
+.associateButton {
+    background-color: #0084ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.associateButton:hover {
+    background-color: #0056b3;
+}
+
+/* Styling for Overview cards */
+#flOverviewCards, #associateOverviewCards {
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* Three columns */
     gap: 20px;
     margin-top: 20px;
 }
 
-.fl-card {
+.fl-card, .associate-card {
     background-color: white;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     border-radius: 8px;
     padding: 20px;
     text-align: center;
 }
-.fl-card h3 {
+
+.fl-card h3, .associate-card h3 {
     margin-top: 0;
     font-size: 1.5em;
 }
 
-.fl-card p {
+.fl-card p, .associate-card p {
     font-size: 1.2em;
     margin: 10px 0;
 }
