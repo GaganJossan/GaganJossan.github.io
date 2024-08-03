@@ -187,3 +187,32 @@ th {
     background: #f1f1f1;
     padding-left: 20px; /* Add a bit of padding on hover for effect */
 }
+
+/* Additional styling for buttons in tables */
+.topicButton {
+    background-color: #0084ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.topicButton:hover {
+    background-color: #0056b3;
+}
+
+.flButton {
+    background-color: #0084ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.flButton:hover {
+    background-color: #0056b3;
+}
