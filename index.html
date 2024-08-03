@@ -26,6 +26,7 @@
     <div id="menu">
         <h2>Menu</h2>
         <a href="#" id="flFeedbacksOverview">FL Feedbacks Overview</a>
+        <a href="#" id="associateFeedbacksOverview">Associates Feedbacks Overview</a>
     </div>
     <main>
         <section id="feedbackFormSection">
@@ -92,6 +93,11 @@
             <div id="flOverviewCards"></div>
             <button id="backToMainFromOverviewButton">Back to Main</button>
         </section>
+        <section id="associateOverviewSection" style="display: none;">
+            <h2>Associates Feedbacks Overview</h2>
+            <div id="associateOverviewCards"></div>
+            <button id="backToMainFromAssociateOverviewButton">Back to Main</button>
+        </section>
         <section id="flDetailView" style="display: none;">
             <h2>FL Feedback Details</h2>
             <table id="flDetailTable">
@@ -107,6 +113,22 @@
                 <tbody id="flDetailTableBody"></tbody>
             </table>
             <button id="backToOverviewButton">Back to Overview</button>
+        </section>
+        <section id="associateDetailView" style="display: none;">
+            <h2>Associate Feedback Details</h2>
+            <table id="associateDetailTable">
+                <thead>
+                    <tr>
+                        <th>Date Submitted</th>
+                        <th>Topic</th>
+                        <th>Feedback</th>
+                        <th>Submitted By</th>
+                        <th>Associate Name</th>
+                    </tr>
+                </thead>
+                <tbody id="associateDetailTableBody"></tbody>
+            </table>
+            <button id="backToAssociateOverviewButton">Back to Overview</button>
         </section>
     </main>
     <script type="module">
@@ -168,9 +190,37 @@
         });
       }
 
+      // Fetch associate feedback overview
+      function fetchAssociateFeedbacksOverview(callback) {
+        onValue(feedbackRef, (snapshot) => {
+          const associateFeedbacks = {};
+          snapshot.forEach((childSnapshot) => {
+            const feedback = childSnapshot.val();
+            const associateName = feedback.associateName.toLowerCase();
+            if (!associateFeedbacks[associateName]) {
+              associateFeedbacks[associateName] = { name: feedback.associateName, count: 0 };
+            }
+            associateFeedbacks[associateName].count++;
+          });
+          callback(associateFeedbacks);
+        });
+      }
+
       // Fetch detailed feedback for a specific FL
       function fetchFLDetails(flName, callback) {
         const feedbackQuery = query(feedbackRef, orderByChild('flSubmitted'), equalTo(flName));
+        onValue(feedbackQuery, (snapshot) => {
+          const feedbacks = [];
+          snapshot.forEach((childSnapshot) => {
+            feedbacks.push(childSnapshot.val());
+          });
+          callback(feedbacks);
+        });
+      }
+
+      // Fetch detailed feedback for a specific associate
+      function fetchAssociateDetails(associateName, callback) {
+        const feedbackQuery = query(feedbackRef, orderByChild('associateName'), equalTo(associateName));
         onValue(feedbackQuery, (snapshot) => {
           const feedbacks = [];
           snapshot.forEach((childSnapshot) => {
@@ -237,8 +287,10 @@
           const searchResults = document.getElementById('searchResults');
           const feedbackFormSection = document.getElementById('feedbackFormSection');
           const flOverviewSection = document.getElementById('flOverviewSection');
+          const associateOverviewSection = document.getElementById('associateOverviewSection');
           const detailView = document.getElementById('detailView');
           const flDetailView = document.getElementById('flDetailView');
+          const associateDetailView = document.getElementById('associateDetailView');
           const backToMainButton = document.getElementById('backToMainButton');
           const backToSummaryButton = document.getElementById('backToSummaryButton');
           const errorMessage = document.getElementById('errorMessage');
@@ -248,8 +300,10 @@
             feedbackFormSection.style.display = 'block';
             searchResults.style.display = 'none';
             flOverviewSection.style.display = 'none';
+            associateOverviewSection.style.display = 'none';
             detailView.style.display = 'none';
             flDetailView.style.display = 'none';
+            associateDetailView.style.display = 'none';
           });
 
           backToSummaryButton.addEventListener('click', () => {
@@ -290,8 +344,10 @@
           searchResults.style.display = 'block';
           feedbackFormSection.style.display = 'none';
           flOverviewSection.style.display = 'none';
+          associateOverviewSection.style.display = 'none';
           detailView.style.display = 'none';
           flDetailView.style.display = 'none';
+          associateDetailView.style.display = 'none';
         }
 
         // Function to display detailed feedback
@@ -344,6 +400,8 @@
           const searchResults = document.getElementById('searchResults');
           const detailView = document.getElementById('detailView');
           const flDetailView = document.getElementById('flDetailView');
+          const associateOverviewSection = document.getElementById('associateOverviewSection');
+          const associateDetailView = document.getElementById('associateDetailView');
           const flOverviewCards = document.getElementById('flOverviewCards');
           const backToMainFromOverviewButton = document.getElementById('backToMainFromOverviewButton');
 
@@ -377,6 +435,8 @@
           searchResults.style.display = 'none';
           detailView.style.display = 'none';
           flDetailView.style.display = 'none';
+          associateOverviewSection.style.display = 'none';
+          associateDetailView.style.display = 'none';
         }
 
         // Function to display detailed feedback for a specific FL
@@ -405,6 +465,89 @@
 
             flDetailView.style.display = 'block';
             flOverviewSection.style.display = 'none';
+          });
+        }
+
+        // Event listener for Associates Feedbacks Overview link
+        document.getElementById('associateFeedbacksOverview').addEventListener('click', (event) => {
+          event.preventDefault();
+          fetchAssociateFeedbacksOverview((associateFeedbacks) => {
+            displayAssociateFeedbacksOverview(associateFeedbacks);
+          });
+        });
+
+        // Function to display associate feedback overview
+        function displayAssociateFeedbacksOverview(associateFeedbacks) {
+          const associateOverviewSection = document.getElementById('associateOverviewSection');
+          const feedbackFormSection = document.getElementById('feedbackFormSection');
+          const searchResults = document.getElementById('searchResults');
+          const detailView = document.getElementById('detailView');
+          const flDetailView = document.getElementById('flDetailView');
+          const flOverviewSection = document.getElementById('flOverviewSection');
+          const associateDetailView = document.getElementById('associateDetailView');
+          const associateOverviewCards = document.getElementById('associateOverviewCards');
+          const backToMainFromAssociateOverviewButton = document.getElementById('backToMainFromAssociateOverviewButton');
+
+          // Add event listener for back button
+          backToMainFromAssociateOverviewButton.addEventListener('click', () => {
+            associateOverviewSection.style.display = 'none';
+            feedbackFormSection.style.display = 'block';
+          });
+
+          associateOverviewCards.innerHTML = '';
+          for (let associate in associateFeedbacks) {
+            let card = document.createElement('div');
+            card.className = 'associate-card';
+            let associateName = document.createElement('h3');
+            associateName.textContent = associateFeedbacks[associate].name;
+            let associateCount = document.createElement('p');
+            associateCount.textContent = `Total Feedback Provided: ${associateFeedbacks[associate].count}`;
+            let button = document.createElement('button');
+            button.textContent = 'View Details';
+            button.onclick = () => displayAssociateDetails(associateFeedbacks[associate].name);
+            button.className = 'associateButton';
+
+            card.appendChild(associateName);
+            card.appendChild(associateCount);
+            card.appendChild(button);
+            associateOverviewCards.appendChild(card);
+          }
+
+          associateOverviewSection.style.display = 'block';
+          feedbackFormSection.style.display = 'none';
+          searchResults.style.display = 'none';
+          detailView.style.display = 'none';
+          flDetailView.style.display = 'none';
+          flOverviewSection.style.display = 'none';
+          associateDetailView.style.display = 'none';
+        }
+
+        // Function to display detailed feedback for a specific associate
+        function displayAssociateDetails(associateName) {
+          fetchAssociateDetails(associateName, (feedbacks) => {
+            const associateDetailView = document.getElementById('associateDetailView');
+            const associateDetailTableBody = document.getElementById('associateDetailTableBody');
+            const associateOverviewSection = document.getElementById('associateOverviewSection');
+            const backToAssociateOverviewButton = document.getElementById('backToAssociateOverviewButton');
+
+            // Add event listener for back button
+            backToAssociateOverviewButton.addEventListener('click', () => {
+              associateDetailView.style.display = 'none';
+              associateOverviewSection.style.display = 'block';
+            });
+
+            associateDetailTableBody.innerHTML = '';
+            feedbacks.forEach(f => {
+              let row = associateDetailTableBody.insertRow();
+              row.insertCell(0).textContent = f.date;
+              row.insertCell(1).textContent = f.topic;
+              row.insertCell(2).textContent = f.feedback;
+              row.insertCell(3).textContent = f.flSubmitted;
+              row.insertCell(4).textContent = f.associateName;
+            });
+
+            associateDetailView.style.display = 'block';
+            associateOverviewSection.style.display = 'none';
           });
         }
       });
