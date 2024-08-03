@@ -121,7 +121,7 @@
       // Import the functions you need from the SDKs you need
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
       import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-analytics.js";
-      import { getDatabase, ref, set, push, onValue, orderByChild, query, startAt, endAt } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
+      import { getDatabase, ref, set, push, onValue, orderByChild, query, equalTo } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
 
       // Your web app's Firebase configuration
       const firebaseConfig = {
@@ -150,7 +150,7 @@
 
       // Fetch feedbacks from Firebase based on associateName
       function fetchFeedbacks(associateName, callback) {
-        const feedbackQuery = query(feedbackRef, orderByChild('associateName'), startAt(associateName), endAt(associateName + "\uf8ff"));
+        const feedbackQuery = query(feedbackRef, orderByChild('associateName'), equalTo(associateName));
         onValue(feedbackQuery, (snapshot) => {
           const feedbacks = [];
           snapshot.forEach((childSnapshot) => {
@@ -178,7 +178,7 @@
 
       // Fetch detailed feedback for a specific FL
       function fetchFLDetails(flName, callback) {
-        const feedbackQuery = query(feedbackRef, orderByChild('flSubmitted'), startAt(flName), endAt(flName + "\uf8ff"));
+        const feedbackQuery = query(feedbackRef, orderByChild('flSubmitted'), equalTo(flName));
         onValue(feedbackQuery, (snapshot) => {
           const feedbacks = [];
           snapshot.forEach((childSnapshot) => {
