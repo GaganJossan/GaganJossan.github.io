@@ -199,6 +199,11 @@ th {
     color: white;
 }
 
+.menu-content {
+    margin-top: 20px;
+    color: white;
+}
+
 /* Cards for FL Feedbacks Overview */
 .fl-card, .associate-card {
     background: white;
@@ -247,4 +252,3 @@ th {
 .deleteButton:hover {
     background-color: darkred;
 }
-</style>
