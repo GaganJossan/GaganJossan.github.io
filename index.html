@@ -243,6 +243,7 @@
           const feedbackSummary = document.getElementById('feedbackSummary');
           const searchResults = document.getElementById('searchResults');
           const feedbackFormSection = document.getElementById('feedbackFormSection');
+          const flOverviewSection = document.getElementById('flOverviewSection');
           const detailView = document.getElementById('detailView');
           const backToMainButton = document.getElementById('backToMainButton');
           const backToSummaryButton = document.getElementById('backToSummaryButton');
@@ -251,6 +252,7 @@
           backToMainButton.addEventListener('click', () => {
             feedbackFormSection.style.display = 'block';
             searchResults.style.display = 'none';
+            flOverviewSection.style.display = 'none';
             detailView.style.display = 'none';
           });
 
@@ -285,6 +287,7 @@
 
           searchResults.style.display = 'block';
           feedbackFormSection.style.display = 'none';
+          flOverviewSection.style.display = 'none';
         }
 
         // Function to display detailed feedback
