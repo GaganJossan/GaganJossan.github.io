@@ -188,6 +188,17 @@ th {
     padding-left: 20px; /* Add a bit of padding on hover for effect */
 }
 
+/* Chart container */
+.chart-container {
+    width: 100%;
+    margin: 20px 0;
+}
+
+canvas {
+    width: 100% !important;
+    height: 400px !important;
+}
+
 /* Additional styling for buttons in tables */
 .topicButton {
     background-color: #0084ff;
