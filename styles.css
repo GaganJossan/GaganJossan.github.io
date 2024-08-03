@@ -11,9 +11,18 @@ header {
     padding: 40px;
     text-align: center;
     position: relative;
+}
+
+#logoTitleContainer {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: center;
+}
+
+#logoImage {
+    width: 80px;
+    height: auto;
+    margin-right: 10px;
 }
 
 #menuButton {
@@ -24,41 +33,23 @@ header {
     cursor: pointer;
 }
 
-.menu-icon {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 40px; /* Increased size */
-    height: 35px; /* Increased size */
+#menuButton .menu-icon {
+    display: inline-block;
     cursor: pointer;
 }
 
-.menu-icon div {
-    width: 100%;
-    height: 5px; /* Increased thickness */
+#menuButton .bar1, #menuButton .bar2, #menuButton .bar3 {
+    width: 35px;
+    height: 5px;
     background-color: white;
-    border-radius: 2px;
-    transition: all 0.3s;
-}
-
-#logoTitleContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 auto;
-}
-
-#logoImage {
-    max-width: 150px; /* Reduced size */
-    height: auto;
-    margin-bottom: 10px;
+    margin: 6px 0;
+    transition: 0.4s;
 }
 
 #searchContainer {
     position: absolute;
+    top: 110px;
     right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
     display: flex;
 }
 
@@ -96,7 +87,6 @@ form {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    margin-top: 20px;
 }
 
 label {
@@ -155,104 +145,106 @@ th {
 #menu {
     position: fixed;
     top: 0;
-    left: -100%; /* Ensure the menu is completely offscreen */
-    width: 300px; /* Adjusted width for better appearance */
+    left: -100%;
+    width: 25%;
     height: 100%;
     background: white;
     z-index: 1001;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
     transition: left 0.3s ease;
+    background-color: #0044cc;
+    color: white;
 }
 
 #menu.open {
-    left: 0; /* Slide the menu into view */
+    left: 0;
 }
 
 #menu h2 {
     margin-top: 0;
-    font-size: 24px;
+    color: white;
 }
 
 #menu a {
     display: block;
     padding: 10px 0;
     text-decoration: none;
-    color: black;
-    font-size: 18px; /* Increased font size for better readability */
+    color: white;
     transition: background 0.3s;
 }
 
 #menu a:hover {
-    background: #f1f1f1;
-    padding-left: 20px; /* Add a bit of padding on hover for effect */
+    background: #0056b3;
 }
 
-/* Additional styling for buttons in tables */
-.topicButton {
-    background-color: #0084ff;
+/* Profile section styles */
+.profile-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-picture {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px solid white;
+    margin-bottom: 10px;
+}
+
+.profile-section h3 {
+    margin: 0;
     color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-    transition: background 0.3s;
 }
 
-.topicButton:hover {
-    background-color: #0056b3;
-}
-
-.flButton {
-    background-color: #0084ff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.flButton:hover {
-    background-color: #0056b3;
-}
-
-.associateButton {
-    background-color: #0084ff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.associateButton:hover {
-    background-color: #0056b3;
-}
-
-/* Styling for Overview cards */
-#flOverviewCards, #associateOverviewCards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Three columns */
-    gap: 20px;
-    margin-top: 20px;
-}
-
+/* Cards for FL Feedbacks Overview */
 .fl-card, .associate-card {
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    border-radius: 8px;
+    background: white;
     padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 10px;
     text-align: center;
+    transition: transform 0.3s;
 }
 
-.fl-card h3, .associate-card h3 {
-    margin-top: 0;
-    font-size: 1.5em;
+.fl-card:hover, .associate-card:hover {
+    transform: scale(1.05);
 }
 
-.fl-card p, .associate-card p {
-    font-size: 1.2em;
-    margin: 10px 0;
+.flButton, .associateButton {
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
 }
+
+.flButton:hover, .associateButton:hover {
+    background-color: #004499;
+}
+
+/* Container for cards */
+#flOverviewCards, #associateOverviewCards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.deleteButton {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.deleteButton:hover {
+    background-color: darkred;
+}
+</style>
