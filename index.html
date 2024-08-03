@@ -259,6 +259,12 @@
           alert('Feedback submitted successfully!');
         });
 
+        // Convert input to uppercase
+        const associateNameInput = document.getElementById('associateName');
+        associateNameInput.addEventListener('input', () => {
+          associateNameInput.value = associateNameInput.value.toUpperCase().replace(/[^A-Z]/g, '');
+        });
+
         // Event listener for search button click
         document.getElementById('searchButton').addEventListener('click', () => {
           const searchBar = document.getElementById('searchBar');
