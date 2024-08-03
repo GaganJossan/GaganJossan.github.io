@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FL Coaches Corner</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <header>
@@ -89,6 +90,9 @@
         </section>
         <section id="flOverviewSection" style="display: none;">
             <h2>FL Feedbacks Overview</h2>
+            <div class="chart-container">
+                <canvas id="flFeedbackChart"></canvas>
+            </div>
             <table>
                 <thead>
                     <tr>
@@ -354,6 +358,7 @@
           const flDetailView = document.getElementById('flDetailView');
           const flOverviewBody = document.getElementById('flOverviewBody');
           const backToMainFromOverviewButton = document.getElementById('backToMainFromOverviewButton');
+          const flFeedbackChart = document.getElementById('flFeedbackChart').getContext('2d');
 
           // Add event listener for back button
           backToMainFromOverviewButton.addEventListener('click', () => {
@@ -362,7 +367,11 @@
           });
 
           flOverviewBody.innerHTML = '';
+          const labels = [];
+          const data = [];
           for (let fl in flFeedbacks) {
+            labels.push(flFeedbacks[fl].name);
+            data.push(flFeedbacks[fl].count);
             let row = flOverviewBody.insertRow();
             let flCell = row.insertCell(0);
             let button = document.createElement('button');
@@ -373,6 +382,28 @@
             flCell.appendChild(button);
             row.insertCell(1).textContent = flFeedbacks[fl].count;
           }
+
+          // Create the chart
+          new Chart(flFeedbackChart, {
+            type: 'bar',
+            data: {
+              labels: labels,
+              datasets: [{
+                label: 'Total Feedback Provided',
+                data: data,
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+              }]
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              }
+            }
+          });
 
           flOverviewSection.style.display = 'block';
           feedbackFormSection.style.display = 'none';
