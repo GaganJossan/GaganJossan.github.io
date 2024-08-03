@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FL Coaches Corner</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <header>
@@ -90,18 +89,7 @@
         </section>
         <section id="flOverviewSection" style="display: none;">
             <h2>FL Feedbacks Overview</h2>
-            <div class="chart-container">
-                <canvas id="flFeedbackChart"></canvas>
-            </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>FL Name</th>
-                        <th>Total Feedback Provided</th>
-                    </tr>
-                </thead>
-                <tbody id="flOverviewBody"></tbody>
-            </table>
+            <div id="flOverviewCards"></div>
             <button id="backToMainFromOverviewButton">Back to Main</button>
         </section>
         <section id="flDetailView" style="display: none;">
@@ -356,9 +344,8 @@
           const searchResults = document.getElementById('searchResults');
           const detailView = document.getElementById('detailView');
           const flDetailView = document.getElementById('flDetailView');
-          const flOverviewBody = document.getElementById('flOverviewBody');
+          const flOverviewCards = document.getElementById('flOverviewCards');
           const backToMainFromOverviewButton = document.getElementById('backToMainFromOverviewButton');
-          const flFeedbackChart = document.getElementById('flFeedbackChart').getContext('2d');
 
           // Add event listener for back button
           backToMainFromOverviewButton.addEventListener('click', () => {
@@ -366,44 +353,24 @@
             feedbackFormSection.style.display = 'block';
           });
 
-          flOverviewBody.innerHTML = '';
-          const labels = [];
-          const data = [];
+          flOverviewCards.innerHTML = '';
           for (let fl in flFeedbacks) {
-            labels.push(flFeedbacks[fl].name);
-            data.push(flFeedbacks[fl].count);
-            let row = flOverviewBody.insertRow();
-            let flCell = row.insertCell(0);
+            let card = document.createElement('div');
+            card.className = 'fl-card';
+            let flName = document.createElement('h3');
+            flName.textContent = flFeedbacks[fl].name;
+            let flCount = document.createElement('p');
+            flCount.textContent = `Total Feedback Provided: ${flFeedbacks[fl].count}`;
             let button = document.createElement('button');
-            button.textContent = flFeedbacks[fl].name;
+            button.textContent = 'View Details';
             button.onclick = () => displayFLDetails(flFeedbacks[fl].name);
-            button.style.cursor = 'pointer';
-            button.className = 'flButton'; // Added class for styling
-            flCell.appendChild(button);
-            row.insertCell(1).textContent = flFeedbacks[fl].count;
-          }
+            button.className = 'flButton';
 
-          // Create the chart
-          new Chart(flFeedbackChart, {
-            type: 'bar',
-            data: {
-              labels: labels,
-              datasets: [{
-                label: 'Total Feedback Provided',
-                data: data,
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
-              }]
-            },
-            options: {
-              scales: {
-                y: {
-                  beginAtZero: true
-                }
-              }
-            }
-          });
+            card.appendChild(flName);
+            card.appendChild(flCount);
+            card.appendChild(button);
+            flOverviewCards.appendChild(card);
+          }
 
           flOverviewSection.style.display = 'block';
           feedbackFormSection.style.display = 'none';
