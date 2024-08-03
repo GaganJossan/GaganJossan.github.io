@@ -196,7 +196,7 @@
           const associateFeedbacks = {};
           snapshot.forEach((childSnapshot) => {
             const feedback = childSnapshot.val();
-            const associateName = feedback.associateName.toLowerCase();
+            const associateName = feedback.associateName;
             if (!associateFeedbacks[associateName]) {
               associateFeedbacks[associateName] = { name: feedback.associateName, count: 0 };
             }
@@ -316,8 +316,7 @@
             feedbackSummary.innerHTML = '';
           } else {
             errorMessage.style.display = 'none';
-            let displayName = searchName.charAt(0).toUpperCase() + searchName.slice(1);
-            summaryAssociateName.textContent = displayName;
+            summaryAssociateName.textContent = searchName;
             feedbackSummary.innerHTML = '';
             let topics = {};
 
