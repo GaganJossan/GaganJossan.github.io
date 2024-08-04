@@ -153,7 +153,7 @@ th {
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
     transition: left 0.3s ease;
-    background-color: #2a5d9f;
+    background-color: #729fcf;
     color: white;
 }
 
@@ -175,7 +175,7 @@ th {
 }
 
 #menu a:hover {
-    background: #004080;
+    background: #5d8dd3;
 }
 
 /* Profile section styles */
@@ -251,4 +251,18 @@ th {
 
 .deleteButton:hover {
     background-color: darkred;
+}
+
+.topicButton {
+    background-color: #0084ff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.topicButton:hover {
+    background-color: #0056b3;
 }
