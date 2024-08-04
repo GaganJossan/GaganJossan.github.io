@@ -320,7 +320,7 @@
       }
 
       document.addEventListener('DOMContentLoaded', () => {
-        // Function to convert input to uppercase
+        // Function to convert input to uppercase, excluding email and password fields
         function enforceUppercase(element) {
           element.addEventListener('input', () => {
             if (element.type !== 'email' && element.type !== 'password') {
