@@ -11,20 +11,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const detailTableBody = document.querySelector('#detailTable tbody');
     const backToMainButton = document.getElementById('backToMainButton');
     const backToSummaryButton = document.getElementById('backToSummaryButton');
-    const flFeedbacksOverview = document.getElementById('flFeedbacksOverviewLink');
+    const menuButton = document.getElementById('menuButton');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const menu = document.getElementById('menu');
+    const flFeedbacksOverview = document.getElementById('flFeedbacksOverview');
     const flOverviewSection = document.getElementById('flOverviewSection');
     const flOverviewBody = document.getElementById('flOverviewBody');
     const flDetailView = document.getElementById('flDetailView');
     const flDetailTableBody = document.getElementById('flDetailTableBody');
     const backToMainFromOverviewButton = document.getElementById('backToMainFromOverviewButton');
     const backToOverviewButton = document.getElementById('backToOverviewButton');
-    const associateFeedbacksOverview = document.getElementById('associateFeedbacksOverviewLink');
-    const associateOverviewSection = document.getElementById('associateOverviewSection');
-    const associateOverviewBody = document.getElementById('associateOverviewBody');
-    const associateDetailView = document.getElementById('associateDetailView');
-    const associateDetailTableBody = document.getElementById('associateDetailTableBody');
-    const backToMainFromAssociateOverviewButton = document.getElementById('backToMainFromAssociateOverviewButton');
-    const backToAssociateOverviewButton = document.getElementById('backToAssociateOverviewButton');
 
     feedbackForm.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -32,7 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const dateOfCoaching = document.getElementById('dateOfCoaching').value;
         const flSubmitted = document.getElementById('flSubmitted').value.trim();
         const topicBulletPoint = document.getElementById('topicBulletPoint').value;
-        const subTopic = document.getElementById('subTopic').value.trim();
         const associateName = document.getElementById('associateName').value.trim();
         const feedbackText = document.getElementById('feedbackText').value.trim();
 
@@ -45,7 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
             date: new Date().toISOString().slice(0, 10),
             flSubmitted: flSubmitted,
             topic: topicBulletPoint,
-            subTopic: subTopic,
             associateName: associateName,
             feedback: feedbackText
         };
@@ -106,22 +100,9 @@ document.addEventListener('DOMContentLoaded', () => {
             let row = detailTableBody.insertRow();
             row.insertCell(0).textContent = f.date;
             row.insertCell(1).textContent = f.topic;
-            row.insertCell(2).textContent = f.subTopic;
-            row.insertCell(3).textContent = f.feedback;
-            row.insertCell(4).textContent = f.flSubmitted;
-            row.insertCell(5).textContent = f.associateName;
-
-            // Add a delete button
-            let actionCell = row.insertCell(6);
-            let deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Delete';
-            deleteButton.className = 'deleteButton';
-            deleteButton.onclick = () => {
-                feedbacks.splice(feedbacks.indexOf(f), 1);
-                localStorage.setItem('feedbacks', JSON.stringify(feedbacks));
-                row.remove();
-            };
-            actionCell.appendChild(deleteButton);
+            row.insertCell(2).textContent = f.feedback;
+            row.insertCell(3).textContent = f.flSubmitted;
+            row.insertCell(4).textContent = f.associateName;
         });
         detailView.style.display = 'block';
         searchResults.style.display = 'none';
@@ -139,6 +120,16 @@ document.addEventListener('DOMContentLoaded', () => {
         searchResults.style.display = 'block';
     });
 
+    menuButton.addEventListener('click', () => {
+        menu.classList.toggle('open');
+        menuOverlay.style.display = menu.classList.contains('open') ? 'block' : 'none';
+    });
+
+    menuOverlay.addEventListener('click', () => {
+        menu.classList.remove('open');
+        menuOverlay.style.display = 'none';
+    });
+
     flFeedbacksOverview.addEventListener('click', (event) => {
         event.preventDefault();
         displayFLFeedbacksOverview();
@@ -146,6 +137,8 @@ document.addEventListener('DOMContentLoaded', () => {
         feedbackFormSection.style.display = 'none';
         searchResults.style.display = 'none';
         detailView.style.display = 'none';
+        menu.classList.remove('open');
+        menuOverlay.style.display = 'none';
     });
 
     function displayFLFeedbacksOverview() {
@@ -178,22 +171,9 @@ document.addEventListener('DOMContentLoaded', () => {
             let row = flDetailTableBody.insertRow();
             row.insertCell(0).textContent = f.date;
             row.insertCell(1).textContent = f.topic;
-            row.insertCell(2).textContent = f.subTopic;
-            row.insertCell(3).textContent = f.feedback;
-            row.insertCell(4).textContent = f.flSubmitted;
-            row.insertCell(5).textContent = f.associateName;
-
-            // Add a delete button
-            let actionCell = row.insertCell(6);
-            let deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Delete';
-            deleteButton.className = 'deleteButton';
-            deleteButton.onclick = () => {
-                feedbacks.splice(feedbacks.indexOf(f), 1);
-                localStorage.setItem('feedbacks', JSON.stringify(feedbacks));
-                row.remove();
-            };
-            actionCell.appendChild(deleteButton);
+            row.insertCell(2).textContent = f.feedback;
+            row.insertCell(3).textContent = f.flSubmitted;
+            row.insertCell(4).textContent = f.associateName;
         });
         flDetailView.style.display = 'block';
         flOverviewSection.style.display = 'none';
@@ -207,75 +187,5 @@ document.addEventListener('DOMContentLoaded', () => {
     backToOverviewButton.addEventListener('click', () => {
         flDetailView.style.display = 'none';
         flOverviewSection.style.display = 'block';
-    });
-
-    associateFeedbacksOverview.addEventListener('click', (event) => {
-        event.preventDefault();
-        displayAssociateFeedbacksOverview();
-        associateOverviewSection.style.display = 'block';
-        feedbackFormSection.style.display = 'none';
-        searchResults.style.display = 'none';
-        detailView.style.display = 'none';
-    });
-
-    function displayAssociateFeedbacksOverview() {
-        associateOverviewBody.innerHTML = '';
-        let associateFeedbacks = {};
-
-        feedbacks.forEach(f => {
-            const associateName = f.associateName.toLowerCase();
-            if (!associateFeedbacks[associateName]) {
-                associateFeedbacks[associateName] = { name: f.associateName, count: 0 };
-            }
-            associateFeedbacks[associateName].count++;
-        });
-
-        for (let associate in associateFeedbacks) {
-            let row = associateOverviewBody.insertRow();
-            let associateCell = row.insertCell(0);
-            let button = document.createElement('button');
-            button.textContent = associateFeedbacks[associate].name;
-            button.onclick = () => displayAssociateDetails(feedbacks.filter(f => f.associateName.toLowerCase() === associate));
-            button.style.cursor = 'pointer';  // Make the cursor a pointer to indicate it's clickable
-            associateCell.appendChild(button);
-            row.insertCell(1).textContent = associateFeedbacks[associate].count;
-        }
-    }
-
-    function displayAssociateDetails(associateFeedbacks) {
-        associateDetailTableBody.innerHTML = '';
-        associateFeedbacks.forEach(f => {
-            let row = associateDetailTableBody.insertRow();
-            row.insertCell(0).textContent = f.date;
-            row.insertCell(1).textContent = f.topic;
-            row.insertCell(2).textContent = f.subTopic;
-            row.insertCell(3).textContent = f.feedback;
-            row.insertCell(4).textContent = f.flSubmitted;
-            row.insertCell(5).textContent = f.associateName;
-
-            // Add a delete button
-            let actionCell = row.insertCell(6);
-            let deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Delete';
-            deleteButton.className = 'deleteButton';
-            deleteButton.onclick = () => {
-                feedbacks.splice(feedbacks.indexOf(f), 1);
-                localStorage.setItem('feedbacks', JSON.stringify(feedbacks));
-                row.remove();
-            };
-            actionCell.appendChild(deleteButton);
-        });
-        associateDetailView.style.display = 'block';
-        associateOverviewSection.style.display = 'none';
-    }
-
-    backToMainFromAssociateOverviewButton.addEventListener('click', () => {
-        associateOverviewSection.style.display = 'none';
-        feedbackFormSection.style.display = 'block';
-    });
-
-    backToAssociateOverviewButton.addEventListener('click', () => {
-        associateDetailView.style.display = 'none';
-        associateOverviewSection.style.display = 'block';
     });
 });
