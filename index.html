@@ -26,16 +26,28 @@
     <div id="menu">
         <div class="profile-section">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAdfqFtIlh9m2XzuAlH9ZR0IlOC8axO9SDKA&s" alt="Profile Picture" class="profile-picture">
-            <h3>MIL ECOM DAYS</h3>
+            <h3 id="username">MIL ECOM DAYS</h3>
         </div>
         <h2>Menu</h2>
         <a href="#" id="flFeedbacksOverview">FL Feedbacks Overview</a>
         <a href="#" id="associateFeedbacksOverview">Associates Feedbacks Overview</a>
+        <a href="#" id="logoutButton">Logout</a>
         <div class="menu-content">
             <p>&copy; Gagandeep 2024</p>
         </div>
     </div>
     <main>
+        <section id="loginFormSection" style="display: none;">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" required>
+                <button type="submit">Login</button>
+                <p id="loginError" style="color: red;"></p>
+            </form>
+        </section>
         <section id="feedbackFormSection">
             <h2>Add Feedback</h2>
             <form id="feedbackForm">
@@ -158,6 +170,7 @@
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
       import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-analytics.js";
       import { getDatabase, ref, set, push, onValue, orderByChild, query, equalTo, remove } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
+      import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
       // Your web app's Firebase configuration
       const firebaseConfig = {
@@ -175,34 +188,77 @@
       const app = initializeApp(firebaseConfig);
       const analytics = getAnalytics(app);
       const database = getDatabase(app);
-
-      // Reference to feedback data in Firebase
+      const auth = getAuth(app);
       const feedbackRef = ref(database, 'feedbacks');
 
-      // Add feedback to Firebase
+      // Authentication state observer
+      onAuthStateChanged(auth, (user) => {
+        const loginFormSection = document.getElementById('loginFormSection');
+        const feedbackFormSection = document.getElementById('feedbackFormSection');
+        const logoutButton = document.getElementById('logoutButton');
+        if (user) {
+          // User is signed in
+          loginFormSection.style.display = 'none';
+          feedbackFormSection.style.display = 'block';
+          logoutButton.style.display = 'block';
+        } else {
+          // User is signed out
+          loginFormSection.style.display = 'block';
+          feedbackFormSection.style.display = 'none';
+          logoutButton.style.display = 'none';
+        }
+      });
+
+      // Login form submission
+      document.getElementById('loginForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        signInWithEmailAndPassword(auth, email, password)
+          .then(() => {
+            alert('Login successful!');
+          })
+          .catch((error) => {
+            const loginError = document.getElementById('loginError');
+            loginError.textContent = error.message;
+          });
+      });
+
+      // Logout button
+      document.getElementById('logoutButton').addEventListener('click', () => {
+        signOut(auth)
+          .then(() => {
+            alert('Logout successful!');
+          })
+          .catch((error) => {
+            console.error('Error logging out:', error);
+          });
+      });
+
+      // Function to add feedback
       function addFeedback(feedback) {
         push(feedbackRef, feedback);
       }
 
-      // Fetch feedbacks from Firebase based on associateName
-      function fetchFeedbacks(associateName, callback) {
-        const feedbackQuery = query(feedbackRef, orderByChild('associateName'), equalTo(associateName));
+      // Function to fetch feedbacks by associate name
+      function fetchFeedbacks(searchName, callback) {
+        const feedbackQuery = query(feedbackRef, orderByChild('associateName'), equalTo(searchName));
         onValue(feedbackQuery, (snapshot) => {
           const feedbacks = [];
           snapshot.forEach((childSnapshot) => {
-            feedbacks.push({ ...childSnapshot.val(), id: childSnapshot.key });
+            feedbacks.push(childSnapshot.val());
           });
           callback(feedbacks);
         });
       }
 
-      // Fetch FL feedback overview
+      // Function to fetch FL feedbacks overview
       function fetchFLFeedbacksOverview(callback) {
         onValue(feedbackRef, (snapshot) => {
           const flFeedbacks = {};
           snapshot.forEach((childSnapshot) => {
             const feedback = childSnapshot.val();
-            const flName = feedback.flSubmitted.toLowerCase();
+            const flName = feedback.flSubmitted;
             if (!flFeedbacks[flName]) {
               flFeedbacks[flName] = { name: feedback.flSubmitted, count: 0 };
             }
@@ -212,7 +268,7 @@
         });
       }
 
-      // Fetch associate feedback overview
+      // Function to fetch associate feedbacks overview
       function fetchAssociateFeedbacksOverview(callback) {
         onValue(feedbackRef, (snapshot) => {
           const associateFeedbacks = {};
@@ -228,7 +284,7 @@
         });
       }
 
-      // Fetch detailed feedback for a specific FL
+      // Function to fetch detailed feedback for a specific FL
       function fetchFLDetails(flName, callback) {
         const feedbackQuery = query(feedbackRef, orderByChild('flSubmitted'), equalTo(flName));
         onValue(feedbackQuery, (snapshot) => {
@@ -240,7 +296,7 @@
         });
       }
 
-      // Fetch detailed feedback for a specific associate
+      // Function to fetch detailed feedback for a specific associate
       function fetchAssociateDetails(associateName, callback) {
         const feedbackQuery = query(feedbackRef, orderByChild('associateName'), equalTo(associateName));
         onValue(feedbackQuery, (snapshot) => {
@@ -252,7 +308,7 @@
         });
       }
 
-      // Delete feedback from Firebase
+      // Function to delete feedback from Firebase
       function deleteFeedback(feedbackId) {
         const feedbackToDelete = ref(database, `feedbacks/${feedbackId}`);
         remove(feedbackToDelete)
@@ -381,8 +437,7 @@
               let button = document.createElement('button');
               button.textContent = topic;
               button.onclick = () => displayDetails(topics[topic]);
-              button.style.cursor = 'pointer';
-              button.className = 'topicButton'; // Added class for styling
+              button.className = 'topicButton';
               topicCell.appendChild(button);
               row.insertCell(1).textContent = topics[topic].length;
             }
@@ -396,53 +451,6 @@
           flDetailView.style.display = 'none';
           associateDetailView.style.display = 'none';
         }
-
-        // Function to display detailed feedback
-        function displayDetails(topicFeedbacks) {
-          const detailTableBody = document.querySelector('#detailTable tbody');
-          const detailView = document.getElementById('detailView');
-          const searchResults = document.getElementById('searchResults');
-
-          detailTableBody.innerHTML = '';
-          topicFeedbacks.forEach(f => {
-            let row = detailTableBody.insertRow();
-            row.insertCell(0).textContent = f.date;
-            row.insertCell(1).textContent = f.topic;
-            row.insertCell(2).textContent = f.subTopic;
-            row.insertCell(3).textContent = f.feedback;
-            row.insertCell(4).textContent = f.flSubmitted;
-            row.insertCell(5).textContent = f.associateName;
-
-            // Add a delete button
-            let actionCell = row.insertCell(6);
-            let deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Delete';
-            deleteButton.className = 'deleteButton';
-            deleteButton.onclick = () => {
-              deleteFeedback(f.id);
-              row.remove();
-            };
-            actionCell.appendChild(deleteButton);
-          });
-
-          detailView.style.display = 'block';
-          searchResults.style.display = 'none';
-        }
-
-        // Menu button functionality
-        const menuButton = document.getElementById('menuButton');
-        const menuOverlay = document.getElementById('menuOverlay');
-        const menu = document.getElementById('menu');
-
-        menuButton.addEventListener('click', () => {
-          menu.classList.toggle('open');
-          menuOverlay.style.display = menu.classList.contains('open') ? 'block' : 'none';
-        });
-
-        menuOverlay.addEventListener('click', () => {
-          menu.classList.remove('open');
-          menuOverlay.style.display = 'none';
-        });
 
         // Event listener for FL Feedbacks Overview link
         document.getElementById('flFeedbacksOverview').addEventListener('click', (event) => {
