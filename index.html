@@ -5,37 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FL Coaches Corner</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-    <header style="display: none;" id="mainHeader">
-        <div id="menuButton" class="menu-icon">
-            <div class="bar1"></div>
-            <div class="bar2"></div>
-            <div class="bar3"></div>
-        </div>
+    <header id="mainHeader">
         <div id="logoTitleContainer">
             <img src="https://1000logos.net/wp-content/uploads/2017/08/Lululemon-Logo.png" alt="Lululemon Logo" id="logoImage">
             <h1>FL Coaches Corner</h1>
         </div>
-        <div id="searchContainer">
-            <input type="text" id="searchBar" placeholder="SEARCH BY ASSOCIATE USER ID...">
-            <button id="searchButton">Search</button>
-        </div>
+        <nav>
+            <ul>
+                <li><a href="#" id="homeLink"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#" id="addFeedbackLink"><i class="fas fa-plus-circle"></i> Add Feedback</a></li>
+                <li><a href="#" id="flFeedbacksOverviewLink"><i class="fas fa-user-tie"></i> FL Feedbacks Overview</a></li>
+                <li><a href="#" id="associateFeedbacksOverviewLink"><i class="fas fa-users"></i> Associates Feedbacks Overview</a></li>
+                <li><a href="#" id="logoutButton"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </nav>
     </header>
-    <div id="menuOverlay"></div>
-    <div id="menu" style="display: none;">
+    <aside id="sidebarMenu">
         <div class="profile-section">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAdfqFtIlh9m2XzuAlH9ZR0IlOC8axO9SDKA&s" alt="Profile Picture" class="profile-picture">
             <h3 id="username">MIL ECOM DAYS</h3>
         </div>
-        <h2>Menu</h2>
-        <a href="#" id="flFeedbacksOverview">FL Feedbacks Overview</a>
-        <a href="#" id="associateFeedbacksOverview">Associates Feedbacks Overview</a>
-        <a href="#" id="logoutButton">Logout</a>
-        <div class="menu-content">
-            <p>&copy; Gagandeep 2024</p>
-        </div>
-    </div>
+        <nav>
+            <ul>
+                <li><a href="#" id="homeShortcut"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#" id="addFeedbackShortcut"><i class="fas fa-plus-circle"></i> Add Feedback</a></li>
+                <li><a href="#" id="flFeedbacksOverviewShortcut"><i class="fas fa-user-tie"></i> FL Feedbacks Overview</a></li>
+                <li><a href="#" id="associateFeedbacksOverviewShortcut"><i class="fas fa-users"></i> Associates Feedbacks Overview</a></li>
+                <li><a href="#" id="logoutShortcut"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </nav>
+    </aside>
     <main>
         <section id="loginFormSection">
             <h2>Login</h2>
@@ -50,10 +52,9 @@
         </section>
         <section id="feedbackFormSection" style="display: none;">
             <h2>Add Feedback</h2>
-            <form id="feedbackForm">
+            <form id="feedbackForm" class="card">
                 <label for="dateOfCoaching">Date of Coaching:</label>
                 <input type="date" id="dateOfCoaching" required>
-                
                 <label for="flSubmitted">FL Submitted:</label>
                 <select id="flSubmitted" required>
                     <option value="SANJAY">SANJAY</option>
@@ -62,7 +63,6 @@
                     <option value="ANKUSH">ANKUSH</option>
                     <option value="DELL">DELL</option>
                 </select>
-                
                 <label for="topicBulletPoint">Topic:</label>
                 <select id="topicBulletPoint" required>
                     <option value="UPH">UPH</option>
@@ -71,16 +71,12 @@
                     <option value="Coaching">Coaching</option>
                     <option value="Training">Training</option>
                 </select>
-
                 <label for="subTopic">Sub Topic:</label>
                 <input type="text" id="subTopic" required>
-                
                 <label for="associateName">Associate User ID:</label>
                 <input type="text" id="associateName" required>
-                
                 <label for="feedbackText">Feedback:</label>
                 <textarea id="feedbackText" placeholder="Enter feedback here..." required></textarea>
-                
                 <button type="submit">Submit Feedback</button>
             </form>
         </section>
@@ -174,13 +170,13 @@
 
       // Your web app's Firebase configuration
       const firebaseConfig = {
-        apiKey: "AIzaSyDvkJUQFsAGDQNY__TmKUvom7HkvK_OEsI",
+        apiKey: "YOUR_API_KEY",
         authDomain: "fl-coaches-corner.firebaseapp.com",
         projectId: "fl-coaches-corner",
         storageBucket: "fl-coaches-corner.appspot.com",
-        messagingSenderId: "748798786709",
-        appId: "1:748798786709:web:dc7bf765761812489e6f9c",
-        measurementId: "G-G0RY03B6D3"
+        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+        appId: "YOUR_APP_ID",
+        measurementId: "YOUR_MEASUREMENT_ID"
       };
 
       // Initialize Firebase
@@ -194,21 +190,21 @@
       onAuthStateChanged(auth, (user) => {
         const loginFormSection = document.getElementById('loginFormSection');
         const mainHeader = document.getElementById('mainHeader');
-        const menu = document.getElementById('menu');
+        const sidebarMenu = document.getElementById('sidebarMenu');
         const feedbackFormSection = document.getElementById('feedbackFormSection');
         const logoutButton = document.getElementById('logoutButton');
         if (user) {
           // User is signed in
           loginFormSection.style.display = 'none';
           mainHeader.style.display = 'block';
-          menu.style.display = 'block';
+          sidebarMenu.style.display = 'block';
           feedbackFormSection.style.display = 'block';
           logoutButton.style.display = 'block';
         } else {
           // User is signed out
           loginFormSection.style.display = 'block';
           mainHeader.style.display = 'none';
-          menu.style.display = 'none';
+          sidebarMenu.style.display = 'none';
           feedbackFormSection.style.display = 'none';
           logoutButton.style.display = 'none';
         }
