@@ -50,6 +50,9 @@
                     <option value="Coaching">Coaching</option>
                     <option value="Training">Training</option>
                 </select>
+
+                <label for="subTopic">Sub Topic:</label>
+                <input type="text" id="subTopic" required>
                 
                 <label for="associateName">Associate User ID:</label>
                 <input type="text" id="associateName" required>
@@ -81,6 +84,7 @@
                     <tr>
                         <th>Date Submitted</th>
                         <th>Topic</th>
+                        <th>Sub Topic</th>
                         <th>Feedback</th>
                         <th>Submitted By</th>
                         <th>Associate Name</th>
@@ -110,6 +114,7 @@
                     <tr>
                         <th>Date Submitted</th>
                         <th>Topic</th>
+                        <th>Sub Topic</th>
                         <th>Feedback</th>
                         <th>Submitted By</th>
                         <th>Associate Name</th>
@@ -127,6 +132,7 @@
                     <tr>
                         <th>Date Submitted</th>
                         <th>Topic</th>
+                        <th>Sub Topic</th>
                         <th>Feedback</th>
                         <th>Submitted By</th>
                         <th>Associate Name</th>
@@ -261,6 +267,7 @@
         enforceUppercase(document.getElementById('associateName'));
         enforceUppercase(document.getElementById('searchBar'));
         enforceUppercase(document.getElementById('flSubmitted'));
+        enforceUppercase(document.getElementById('subTopic'));
 
         // Event listener for the feedback form submission
         document.getElementById('feedbackForm').addEventListener('submit', (event) => {
@@ -269,10 +276,11 @@
           const dateOfCoaching = document.getElementById('dateOfCoaching').value;
           const flSubmitted = document.getElementById('flSubmitted').value.trim();
           const topicBulletPoint = document.getElementById('topicBulletPoint').value;
+          const subTopic = document.getElementById('subTopic').value.trim();
           const associateName = document.getElementById('associateName').value.trim();
           const feedbackText = document.getElementById('feedbackText').value.trim();
 
-          if (!dateOfCoaching || !flSubmitted || !topicBulletPoint || !associateName || !feedbackText) {
+          if (!dateOfCoaching || !flSubmitted || !topicBulletPoint || !subTopic || !associateName || !feedbackText) {
             alert('Please fill in all fields before submitting.');
             return;
           }
@@ -281,6 +289,7 @@
             date: new Date().toISOString().slice(0, 10),
             flSubmitted: flSubmitted,
             topic: topicBulletPoint,
+            subTopic: subTopic,
             associateName: associateName,
             feedback: feedbackText
           };
@@ -391,12 +400,13 @@
             let row = detailTableBody.insertRow();
             row.insertCell(0).textContent = f.date;
             row.insertCell(1).textContent = f.topic;
-            row.insertCell(2).textContent = f.feedback;
-            row.insertCell(3).textContent = f.flSubmitted;
-            row.insertCell(4).textContent = f.associateName;
+            row.insertCell(2).textContent = f.subTopic;
+            row.insertCell(3).textContent = f.feedback;
+            row.insertCell(4).textContent = f.flSubmitted;
+            row.insertCell(5).textContent = f.associateName;
 
             // Add a delete button
-            let actionCell = row.insertCell(5);
+            let actionCell = row.insertCell(6);
             let deleteButton = document.createElement('button');
             deleteButton.textContent = 'Delete';
             deleteButton.className = 'deleteButton';
@@ -499,12 +509,13 @@
               let row = flDetailTableBody.insertRow();
               row.insertCell(0).textContent = f.date;
               row.insertCell(1).textContent = f.topic;
-              row.insertCell(2).textContent = f.feedback;
-              row.insertCell(3).textContent = f.flSubmitted;
-              row.insertCell(4).textContent = f.associateName;
+              row.insertCell(2).textContent = f.subTopic;
+              row.insertCell(3).textContent = f.feedback;
+              row.insertCell(4).textContent = f.flSubmitted;
+              row.insertCell(5).textContent = f.associateName;
 
               // Add a delete button
-              let actionCell = row.insertCell(5);
+              let actionCell = row.insertCell(6);
               let deleteButton = document.createElement('button');
               deleteButton.textContent = 'Delete';
               deleteButton.className = 'deleteButton';
@@ -595,12 +606,13 @@
               let row = associateDetailTableBody.insertRow();
               row.insertCell(0).textContent = f.date;
               row.insertCell(1).textContent = f.topic;
-              row.insertCell(2).textContent = f.feedback;
-              row.insertCell(3).textContent = f.flSubmitted;
-              row.insertCell(4).textContent = f.associateName;
+              row.insertCell(2).textContent = f.subTopic;
+              row.insertCell(3).textContent = f.feedback;
+              row.insertCell(4).textContent = f.flSubmitted;
+              row.insertCell(5).textContent = f.associateName;
 
               // Add a delete button
-              let actionCell = row.insertCell(5);
+              let actionCell = row.insertCell(6);
               let deleteButton = document.createElement('button');
               deleteButton.textContent = 'Delete';
               deleteButton.className = 'deleteButton';
