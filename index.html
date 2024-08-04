@@ -170,13 +170,12 @@
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
       import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-analytics.js";
       import { getDatabase, ref, set, push, onValue, orderByChild, query, equalTo, remove } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
-      import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+      import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
       // Your web app's Firebase configuration
       const firebaseConfig = {
         apiKey: "AIzaSyDvkJUQFsAGDQNY__TmKUvom7HkvK_OEsI",
         authDomain: "fl-coaches-corner.firebaseapp.com",
-        databaseURL: "https://fl-coaches-corner-default-rtdb.firebaseio.com",
         projectId: "fl-coaches-corner",
         storageBucket: "fl-coaches-corner.appspot.com",
         messagingSenderId: "748798786709",
@@ -324,7 +323,9 @@
         // Function to convert input to uppercase
         function enforceUppercase(element) {
           element.addEventListener('input', () => {
-            element.value = element.value.toUpperCase().replace(/[^A-Z]/g, '');
+            if (element.type !== 'email' && element.type !== 'password') {
+              element.value = element.value.toUpperCase().replace(/[^A-Z]/g, '');
+            }
           });
         }
 
@@ -415,22 +416,22 @@
             searchResults.style.display = 'block';
           });
 
-          if (feedbacks.length === 0) {
-            errorMessage.style.display = 'block';
-            feedbackSummary.innerHTML = '';
-          } else {
-            errorMessage.style.display = 'none';
-            summaryAssociateName.textContent = searchName;
-            feedbackSummary.innerHTML = '';
-            let topics = {};
+          summaryAssociateName.textContent = searchName.charAt(0).toUpperCase() + searchName.slice(1);
+          feedbackSummary.innerHTML = '';
+          let topics = {};
 
-            feedbacks.forEach(f => {
+          feedbacks.filter(f => f.associateName === searchName)
+            .forEach(f => {
               if (!topics[f.topic]) {
                 topics[f.topic] = [];
               }
               topics[f.topic].push(f);
             });
 
+          if (Object.keys(topics).length === 0) {
+            errorMessage.style.display = 'block';
+          } else {
+            errorMessage.style.display = 'none';
             for (let topic in topics) {
               let row = feedbackSummary.insertRow();
               let topicCell = row.insertCell(0);
@@ -450,6 +451,38 @@
           detailView.style.display = 'none';
           flDetailView.style.display = 'none';
           associateDetailView.style.display = 'none';
+        }
+
+        // Function to display detailed feedback
+        function displayDetails(feedbacks) {
+          const detailTableBody = document.querySelector('#detailTable tbody');
+          const detailView = document.getElementById('detailView');
+          const searchResults = document.getElementById('searchResults');
+
+          detailTableBody.innerHTML = '';
+          feedbacks.forEach(f => {
+            let row = detailTableBody.insertRow();
+            row.insertCell(0).textContent = f.date;
+            row.insertCell(1).textContent = f.topic;
+            row.insertCell(2).textContent = f.subTopic;
+            row.insertCell(3).textContent = f.feedback;
+            row.insertCell(4).textContent = f.flSubmitted;
+            row.insertCell(5).textContent = f.associateName;
+
+            // Add a delete button
+            let actionCell = row.insertCell(6);
+            let deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.className = 'deleteButton';
+            deleteButton.onclick = () => {
+              deleteFeedback(f.id);
+              row.remove();
+            };
+            actionCell.appendChild(deleteButton);
+          });
+
+          detailView.style.display = 'block';
+          searchResults.style.display = 'none';
         }
 
         // Event listener for FL Feedbacks Overview link
@@ -643,6 +676,21 @@
             associateOverviewSection.style.display = 'none';
           });
         }
+
+        // Menu button event listener
+        const menuButton = document.getElementById('menuButton');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const menu = document.getElementById('menu');
+
+        menuButton.addEventListener('click', () => {
+          menu.classList.toggle('open');
+          menuOverlay.style.display = menu.classList.contains('open') ? 'block' : 'none';
+        });
+
+        menuOverlay.addEventListener('click', () => {
+          menu.classList.remove('open');
+          menuOverlay.style.display = 'none';
+        });
       });
     </script>
 </body>
