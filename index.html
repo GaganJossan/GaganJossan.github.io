@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
+    <header style="display: none;" id="mainHeader">
         <div id="menuButton" class="menu-icon">
             <div class="bar1"></div>
             <div class="bar2"></div>
@@ -23,7 +23,7 @@
         </div>
     </header>
     <div id="menuOverlay"></div>
-    <div id="menu">
+    <div id="menu" style="display: none;">
         <div class="profile-section">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAdfqFtIlh9m2XzuAlH9ZR0IlOC8axO9SDKA&s" alt="Profile Picture" class="profile-picture">
             <h3 id="username">MIL ECOM DAYS</h3>
@@ -37,7 +37,7 @@
         </div>
     </div>
     <main>
-        <section id="loginFormSection" style="display: none;">
+        <section id="loginFormSection">
             <h2>Login</h2>
             <form id="loginForm">
                 <label for="email">Email:</label>
@@ -48,7 +48,7 @@
                 <p id="loginError" style="color: red;"></p>
             </form>
         </section>
-        <section id="feedbackFormSection">
+        <section id="feedbackFormSection" style="display: none;">
             <h2>Add Feedback</h2>
             <form id="feedbackForm">
                 <label for="dateOfCoaching">Date of Coaching:</label>
@@ -193,16 +193,22 @@
       // Authentication state observer
       onAuthStateChanged(auth, (user) => {
         const loginFormSection = document.getElementById('loginFormSection');
+        const mainHeader = document.getElementById('mainHeader');
+        const menu = document.getElementById('menu');
         const feedbackFormSection = document.getElementById('feedbackFormSection');
         const logoutButton = document.getElementById('logoutButton');
         if (user) {
           // User is signed in
           loginFormSection.style.display = 'none';
+          mainHeader.style.display = 'block';
+          menu.style.display = 'block';
           feedbackFormSection.style.display = 'block';
           logoutButton.style.display = 'block';
         } else {
           // User is signed out
           loginFormSection.style.display = 'block';
+          mainHeader.style.display = 'none';
+          menu.style.display = 'none';
           feedbackFormSection.style.display = 'none';
           logoutButton.style.display = 'none';
         }
@@ -211,7 +217,7 @@
       // Login form submission
       document.getElementById('loginForm').addEventListener('submit', (event) => {
         event.preventDefault();
-        const email = document.getElementById('email').value;
+        const email = document.getElementById('email').value.toLowerCase();
         const password = document.getElementById('password').value;
         signInWithEmailAndPassword(auth, email, password)
           .then(() => {
@@ -228,6 +234,7 @@
         signOut(auth)
           .then(() => {
             alert('Logout successful!');
+            window.location.reload();
           })
           .catch((error) => {
             console.error('Error logging out:', error);
