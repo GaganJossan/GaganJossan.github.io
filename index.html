@@ -250,6 +250,18 @@
       }
 
       document.addEventListener('DOMContentLoaded', () => {
+        // Function to convert input to uppercase
+        function enforceUppercase(element) {
+          element.addEventListener('input', () => {
+            element.value = element.value.toUpperCase().replace(/[^A-Z]/g, '');
+          });
+        }
+
+        // Apply enforceUppercase function to relevant input fields
+        enforceUppercase(document.getElementById('associateName'));
+        enforceUppercase(document.getElementById('searchBar'));
+        enforceUppercase(document.getElementById('flSubmitted'));
+
         // Event listener for the feedback form submission
         document.getElementById('feedbackForm').addEventListener('submit', (event) => {
           event.preventDefault();
@@ -276,12 +288,6 @@
           addFeedback(feedback);
           document.getElementById('feedbackForm').reset();
           alert('Feedback submitted successfully!');
-        });
-
-        // Convert input to uppercase
-        const associateNameInput = document.getElementById('associateName');
-        associateNameInput.addEventListener('input', () => {
-          associateNameInput.value = associateNameInput.value.toUpperCase().replace(/[^A-Z]/g, '');
         });
 
         // Event listener for search button click
