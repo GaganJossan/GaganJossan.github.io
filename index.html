@@ -324,7 +324,7 @@
         function enforceUppercase(element) {
           element.addEventListener('input', () => {
             if (element.type !== 'email' && element.type !== 'password') {
-              element.value = element.value.toUpperCase().replace(/[^A-Z]/g, '');
+              element.value = element.value.toUpperCase().replace(/[^A-Z ]/g, '');
             }
           });
         }
