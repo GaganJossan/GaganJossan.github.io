@@ -8,7 +8,7 @@ body {
 header {
     background-color: #0044cc;
     color: white;
-    padding: 74px;
+    padding: 40px;
     text-align: center;
     position: relative;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -21,7 +21,7 @@ h1, h2, h3 {
 
 p {
     margin: 0;
-    line-height: 60.6;
+    line-height: 1.6;
 }
 
 #logoTitleContainer {
@@ -59,7 +59,7 @@ p {
 
 #searchContainer {
     position: absolute;
-    top: 81px;
+    top: 20px;
     right: 20px;
     display: flex;
 }
