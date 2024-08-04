@@ -18,7 +18,7 @@
             <h1>FL Coaches Corner</h1>
         </div>
         <div id="searchContainer">
-            <input type="text" id="searchBar" placeholder="Search by associate user ID...">
+            <input type="text" id="searchBar" placeholder="SEARCH BY ASSOCIATE USER ID...">
             <button id="searchButton">Search</button>
         </div>
     </header>
@@ -31,6 +31,9 @@
         <h2>Menu</h2>
         <a href="#" id="flFeedbacksOverview">FL Feedbacks Overview</a>
         <a href="#" id="associateFeedbacksOverview">Associates Feedbacks Overview</a>
+        <div class="menu-content">
+            <p>&copy; Gagandeep 2024</p>
+        </div>
     </div>
     <main>
         <section id="feedbackFormSection">
@@ -40,7 +43,13 @@
                 <input type="date" id="dateOfCoaching" required>
                 
                 <label for="flSubmitted">FL Submitted:</label>
-                <input type="text" id="flSubmitted" required>
+                <select id="flSubmitted" required>
+                    <option value="SANJAY">SANJAY</option>
+                    <option value="SHABNAM">SHABNAM</option>
+                    <option value="GIANCARLO">GIANCARLO</option>
+                    <option value="ANKUSH">ANKUSH</option>
+                    <option value="DELL">DELL</option>
+                </select>
                 
                 <label for="topicBulletPoint">Topic:</label>
                 <select id="topicBulletPoint" required>
@@ -266,7 +275,6 @@
         // Apply enforceUppercase function to relevant input fields
         enforceUppercase(document.getElementById('associateName'));
         enforceUppercase(document.getElementById('searchBar'));
-        enforceUppercase(document.getElementById('flSubmitted'));
         enforceUppercase(document.getElementById('subTopic'));
 
         // Event listener for the feedback form submission
@@ -274,7 +282,7 @@
           event.preventDefault();
 
           const dateOfCoaching = document.getElementById('dateOfCoaching').value;
-          const flSubmitted = document.getElementById('flSubmitted').value.trim();
+          const flSubmitted = document.getElementById('flSubmitted').value;
           const topicBulletPoint = document.getElementById('topicBulletPoint').value;
           const subTopic = document.getElementById('subTopic').value.trim();
           const associateName = document.getElementById('associateName').value.trim();
