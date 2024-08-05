@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header style="display: none;" id="mainHeader">
+    <header id="header" style="display: none;">
         <div id="menuButton" class="menu-icon">
             <div class="bar1"></div>
             <div class="bar2"></div>
@@ -193,23 +193,23 @@
       // Authentication state observer
       onAuthStateChanged(auth, (user) => {
         const loginFormSection = document.getElementById('loginFormSection');
-        const mainHeader = document.getElementById('mainHeader');
-        const menu = document.getElementById('menu');
         const feedbackFormSection = document.getElementById('feedbackFormSection');
+        const header = document.getElementById('header');
+        const menu = document.getElementById('menu');
         const logoutButton = document.getElementById('logoutButton');
         if (user) {
           // User is signed in
           loginFormSection.style.display = 'none';
-          mainHeader.style.display = 'block';
-          menu.style.display = 'block';
           feedbackFormSection.style.display = 'block';
+          header.style.display = 'flex';
+          menu.style.display = 'block';
           logoutButton.style.display = 'block';
         } else {
           // User is signed out
           loginFormSection.style.display = 'block';
-          mainHeader.style.display = 'none';
-          menu.style.display = 'none';
           feedbackFormSection.style.display = 'none';
+          header.style.display = 'none';
+          menu.style.display = 'none';
           logoutButton.style.display = 'none';
         }
       });
@@ -217,7 +217,7 @@
       // Login form submission
       document.getElementById('loginForm').addEventListener('submit', (event) => {
         event.preventDefault();
-        const email = document.getElementById('email').value.toLowerCase();
+        const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
         signInWithEmailAndPassword(auth, email, password)
           .then(() => {
@@ -234,7 +234,6 @@
         signOut(auth)
           .then(() => {
             alert('Logout successful!');
-            window.location.reload();
           })
           .catch((error) => {
             console.error('Error logging out:', error);
