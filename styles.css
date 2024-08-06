@@ -291,3 +291,55 @@ th {
 .topicButton:hover {
     background-color: #0056b3;
 }
+
+/* FL Feedbacks Overview Page Specific Styles */
+#flOverviewSection {
+    background-color: #f0f8ff;
+    padding: 20px;
+}
+
+#flOverviewSection h2 {
+    color: #0044cc;
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+#flOverviewCards .fl-card {
+    background-color: #e6f7ff;
+    border: 1px solid #b3e0ff;
+}
+
+#flOverviewCards .fl-card h3 {
+    color: #0066cc;
+    margin-bottom: 10px;
+}
+
+#flOverviewCards .fl-card p {
+    color: #333;
+}
+
+#flOverviewCards .flButton {
+    background-color: #0044cc;
+}
+
+#flOverviewCards .flButton:hover {
+    background-color: #003399;
+}
+
+#backToMainFromOverviewButton {
+    display: block;
+    margin: 20px auto;
+    background-color: #0044cc;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+#backToMainFromOverviewButton:hover {
+    background-color: #003399;
+}
