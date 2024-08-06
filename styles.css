@@ -292,80 +292,24 @@ th {
     background-color: #0056b3;
 }
 
-/* FL Feedbacks Overview Page Specific Styles */
-#flOverviewSection {
-    background-color: #f8f9fa;
-    padding: 40px 20px;
-    border-radius: 8px;
+/* Feedback images */
+.feedback-images {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px;
 }
 
-#flOverviewSection h2 {
-    color: #333;
-    text-align: center;
-    font-size: 28px;
-    margin-bottom: 30px;
-    font-family: 'Georgia', serif;
-}
-
-#flOverviewCards {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
-}
-
-.fl-card {
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.fl-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.fl-card h3 {
-    color: #007bff;
-    font-size: 24px;
+.feedback-images img {
+    width: 150px;
+    height: auto;
     margin-bottom: 10px;
-    font-family: 'Georgia', serif;
 }
 
-.fl-card p {
-    color: #555;
-    font-size: 16px;
-}
-
-.fl-card .flButton {
-    background-color: #007bff;
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.fl-card .flButton:hover {
-    background-color: #0056b3;
-}
-
-#backToMainFromOverviewButton {
-    display: block;
-    margin: 20px auto;
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-#backToMainFromOverviewButton:hover {
-    background-color: #0056b3;
+.feedback-form-container {
+    flex-grow: 1;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
