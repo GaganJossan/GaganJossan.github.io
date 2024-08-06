@@ -369,3 +369,34 @@ th {
 #backToMainFromOverviewButton:hover {
     background-color: #0056b3;
 }
+
+/* Login Page Specific Styles */
+#loginFormSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: url('https://images.unsplash.com/photo-1521747116042-5a810fda9664') no-repeat center center/cover;
+}
+
+#loginFormSection h2 {
+    color: white;
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+#loginFormSection form {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#loginFormSection label {
+    color: #333;
+}
+
+#loginFormSection input, #loginFormSection button {
+    font-size: 18px;
+}
