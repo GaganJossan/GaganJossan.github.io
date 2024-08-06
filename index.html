@@ -500,7 +500,7 @@
             editButton.textContent = 'Edit';
             editButton.className = 'editButton';
             editButton.onclick = () => {
-              editFeedback(f.id, f);
+              enableEditing(row, f.id);
             };
             actionCell.appendChild(editButton);
           });
@@ -509,34 +509,51 @@
           searchResults.style.display = 'none';
         }
 
-        // Function to handle editing feedback
-        function editFeedback(feedbackId, feedback) {
-          document.getElementById('dateOfCoaching').value = feedback.date;
-          document.getElementById('flSubmitted').value = feedback.flSubmitted;
-          document.getElementById('topicBulletPoint').value = feedback.topic;
-          document.getElementById('subTopic').value = feedback.subTopic;
-          document.getElementById('associateName').value = feedback.associateName;
-          document.getElementById('feedbackText').value = feedback.feedback;
+        // Function to enable editing
+        function enableEditing(row, feedbackId) {
+          const cells = row.querySelectorAll('td');
+          const dateCell = cells[0];
+          const topicCell = cells[1];
+          const subTopicCell = cells[2];
+          const feedbackCell = cells[3];
+          const flSubmittedCell = cells[4];
+          const associateNameCell = cells[5];
+          const actionCell = cells[6];
 
-          const submitButton = document.querySelector('#feedbackForm button[type="submit"]');
-          submitButton.textContent = 'Update Feedback';
-          submitButton.onclick = (event) => {
-            event.preventDefault();
+          dateCell.innerHTML = `<input type="date" value="${dateCell.textContent}">`;
+          topicCell.innerHTML = `<input type="text" value="${topicCell.textContent}">`;
+          subTopicCell.innerHTML = `<input type="text" value="${subTopicCell.textContent}">`;
+          feedbackCell.innerHTML = `<textarea>${feedbackCell.textContent}</textarea>`;
+          flSubmittedCell.innerHTML = `<input type="text" value="${flSubmittedCell.textContent}">`;
+          associateNameCell.innerHTML = `<input type="text" value="${associateNameCell.textContent}">`;
 
+          const saveButton = document.createElement('button');
+          saveButton.textContent = 'Save';
+          saveButton.className = 'saveButton';
+          saveButton.onclick = () => {
             const updatedFeedback = {
-              date: document.getElementById('dateOfCoaching').value,
-              flSubmitted: document.getElementById('flSubmitted').value,
-              topic: document.getElementById('topicBulletPoint').value,
-              subTopic: document.getElementById('subTopic').value.trim(),
-              associateName: document.getElementById('associateName').value.trim(),
-              feedback: document.getElementById('feedbackText').value.trim()
+              date: dateCell.querySelector('input').value,
+              topic: topicCell.querySelector('input').value,
+              subTopic: subTopicCell.querySelector('input').value,
+              feedback: feedbackCell.querySelector('textarea').value,
+              flSubmitted: flSubmittedCell.querySelector('input').value,
+              associateName: associateNameCell.querySelector('input').value
             };
 
             updateFeedback(feedbackId, updatedFeedback);
-            document.getElementById('feedbackForm').reset();
-            submitButton.textContent = 'Submit Feedback';
-            submitButton.onclick = null;  // Remove the update handler
+
+            // Restore the original text content
+            dateCell.textContent = updatedFeedback.date;
+            topicCell.textContent = updatedFeedback.topic;
+            subTopicCell.textContent = updatedFeedback.subTopic;
+            feedbackCell.textContent = updatedFeedback.feedback;
+            flSubmittedCell.textContent = updatedFeedback.flSubmitted;
+            associateNameCell.textContent = updatedFeedback.associateName;
+
+            actionCell.removeChild(saveButton);
           };
+
+          actionCell.appendChild(saveButton);
         }
 
         // Event listener for FL Feedbacks Overview link
@@ -633,7 +650,7 @@
               editButton.textContent = 'Edit';
               editButton.className = 'editButton';
               editButton.onclick = () => {
-                editFeedback(f.id, f);
+                enableEditing(row, f.id);
               };
               actionCell.appendChild(editButton);
             });
@@ -739,7 +756,7 @@
               editButton.textContent = 'Edit';
               editButton.className = 'editButton';
               editButton.onclick = () => {
-                editFeedback(f.id, f);
+                enableEditing(row, f.id);
               };
               actionCell.appendChild(editButton);
             });
