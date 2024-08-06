@@ -10,11 +10,19 @@
             background-color: red;
             color: white;
         }
+        .coaching-button {
+            background-color: yellow;
+            color: black;
+        }
+        .shoutout-button {
+            background-color: green;
+            color: white;
+        }
     </style>
 </head>
 <body>
     <header>
-        <div id="menuButton" class="menu-icon">
+        <div id="menuButton" class="menu-icon" style="display: none;">
             <div class="bar1"></div>
             <div class="bar2"></div>
             <div class="bar3"></div>
@@ -23,13 +31,13 @@
             <img src="https://1000logos.net/wp-content/uploads/2017/08/Lululemon-Logo.png" alt="Lululemon Logo" id="logoImage">
             <h1>FL Coaches Corner</h1>
         </div>
-        <div id="searchContainer">
+        <div id="searchContainer" style="display: none;">
             <input type="text" id="searchBar" placeholder="SEARCH BY ASSOCIATE USER ID...">
             <button id="searchButton">Search</button>
         </div>
     </header>
     <div id="menuOverlay"></div>
-    <div id="menu">
+    <div id="menu" style="display: none;">
         <div class="profile-section">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAdfqFtIlh9m2XzuAlH9ZR0IlOC8axO9SDKA&s" alt="Profile Picture" class="profile-picture">
             <h3 id="username">MIL ECOM DAYS</h3>
@@ -72,9 +80,9 @@
                 <label for="topicBulletPoint">Topic:</label>
                 <select id="topicBulletPoint" required>
                     <option value="UPH">UPH</option>
-                    <option value="Shoutout">Shoutout</option>
+                    <option value="Shoutout" class="shoutout-button">Shoutout</option>
                     <option value="Repeat Coaching" class="repeat-coaching-button">Repeat Coaching</option>
-                    <option value="Coaching">Coaching</option>
+                    <option value="Coaching" class="coaching-button">Coaching</option>
                     <option value="Training">Training</option>
                 </select>
 
@@ -202,18 +210,24 @@
         const feedbackFormSection = document.getElementById('feedbackFormSection');
         const searchContainer = document.getElementById('searchContainer');
         const logoutButton = document.getElementById('logoutButton');
+        const menuButton = document.getElementById('menuButton');
+        const menu = document.getElementById('menu');
         if (user) {
           // User is signed in
           loginFormSection.style.display = 'none';
           feedbackFormSection.style.display = 'block';
           searchContainer.style.display = 'flex';
           logoutButton.style.display = 'block';
+          menuButton.style.display = 'block';
+          menu.style.display = 'block';
         } else {
           // User is signed out
           loginFormSection.style.display = 'block';
           feedbackFormSection.style.display = 'none';
           searchContainer.style.display = 'none';
           logoutButton.style.display = 'none';
+          menuButton.style.display = 'none';
+          menu.style.display = 'none';
         }
       });
 
@@ -462,6 +476,10 @@
               button.className = 'topicButton';
               if (topic === 'Repeat Coaching') {
                 button.classList.add('repeat-coaching-button');
+              } else if (topic === 'Coaching') {
+                button.classList.add('coaching-button');
+              } else if (topic === 'Shoutout') {
+                button.classList.add('shoutout-button');
               }
               topicCell.appendChild(button);
               row.insertCell(1).textContent = topics[topic].length;
