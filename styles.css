@@ -294,43 +294,69 @@ th {
 
 /* FL Feedbacks Overview Page Specific Styles */
 #flOverviewSection {
-    background-color: #f0f8ff;
-    padding: 20px;
+    background-color: #f8f9fa;
+    padding: 40px 20px;
+    border-radius: 8px;
 }
 
 #flOverviewSection h2 {
-    color: #0044cc;
-    text-align: center;
-    font-size: 24px;
-    margin-bottom: 20px;
-}
-
-#flOverviewCards .fl-card {
-    background-color: #e6f7ff;
-    border: 1px solid #b3e0ff;
-}
-
-#flOverviewCards .fl-card h3 {
-    color: #0066cc;
-    margin-bottom: 10px;
-}
-
-#flOverviewCards .fl-card p {
     color: #333;
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 30px;
+    font-family: 'Georgia', serif;
 }
 
-#flOverviewCards .flButton {
-    background-color: #0044cc;
+#flOverviewCards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
 }
 
-#flOverviewCards .flButton:hover {
-    background-color: #003399;
+.fl-card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.fl-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.fl-card h3 {
+    color: #007bff;
+    font-size: 24px;
+    margin-bottom: 10px;
+    font-family: 'Georgia', serif;
+}
+
+.fl-card p {
+    color: #555;
+    font-size: 16px;
+}
+
+.fl-card .flButton {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.fl-card .flButton:hover {
+    background-color: #0056b3;
 }
 
 #backToMainFromOverviewButton {
     display: block;
     margin: 20px auto;
-    background-color: #0044cc;
+    background-color: #007bff;
     color: white;
     padding: 10px 20px;
     border-radius: 5px;
@@ -341,5 +367,5 @@ th {
 }
 
 #backToMainFromOverviewButton:hover {
-    background-color: #003399;
+    background-color: #0056b3;
 }
