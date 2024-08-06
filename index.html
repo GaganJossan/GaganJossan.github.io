@@ -63,47 +63,40 @@
             </form>
         </section>
         <section id="feedbackFormSection" style="display: none;">
-            <div class="feedback-images">
-                <img src="https://via.placeholder.com/150" alt="Feedback Image 1">
-                <img src="https://via.placeholder.com/150" alt="Feedback Image 2">
-                <img src="https://via.placeholder.com/150" alt="Feedback Image 3">
-            </div>
-            <div class="feedback-form-container">
-                <h2>Add Feedback</h2>
-                <form id="feedbackForm">
-                    <label for="dateOfCoaching">Date of Coaching:</label>
-                    <input type="date" id="dateOfCoaching" required>
-                    
-                    <label for="flSubmitted">FL Submitted:</label>
-                    <select id="flSubmitted" required>
-                        <option value="SANJAY">SANJAY</option>
-                        <option value="SHABNAM">SHABNAM</option>
-                        <option value="GIANCARLO">GIANCARLO</option>
-                        <option value="ANKUSH">ANKUSH</option>
-                        <option value="DELL">DELL</option>
-                    </select>
-                    
-                    <label for="topicBulletPoint">Topic:</label>
-                    <select id="topicBulletPoint" required>
-                        <option value="UPH">UPH</option>
-                        <option value="Shoutout" class="shoutout-button">Shoutout</option>
-                        <option value="Repeat Coaching" class="repeat-coaching-button">Repeat Coaching</option>
-                        <option value="Coaching" class="coaching-button">Coaching</option>
-                        <option value="Training">Training</option>
-                    </select>
+            <h2>Add Feedback</h2>
+            <form id="feedbackForm">
+                <label for="dateOfCoaching">Date of Coaching:</label>
+                <input type="date" id="dateOfCoaching" required>
+                
+                <label for="flSubmitted">FL Submitted:</label>
+                <select id="flSubmitted" required>
+                    <option value="SANJAY">SANJAY</option>
+                    <option value="SHABNAM">SHABNAM</option>
+                    <option value="GIANCARLO">GIANCARLO</option>
+                    <option value="ANKUSH">ANKUSH</option>
+                    <option value="DELL">DELL</option>
+                </select>
+                
+                <label for="topicBulletPoint">Topic:</label>
+                <select id="topicBulletPoint" required>
+                    <option value="UPH">UPH</option>
+                    <option value="Shoutout" class="shoutout-button">Shoutout</option>
+                    <option value="Repeat Coaching" class="repeat-coaching-button">Repeat Coaching</option>
+                    <option value="Coaching" class="coaching-button">Coaching</option>
+                    <option value="Training">Training</option>
+                </select>
 
-                    <label for="subTopic">Sub Topic:</label>
-                    <input type="text" id="subTopic" required>
-                    
-                    <label for="associateName">Associate User ID:</label>
-                    <input type="text" id="associateName" required>
-                    
-                    <label for="feedbackText">Feedback:</label>
-                    <textarea id="feedbackText" placeholder="Enter feedback here..." required></textarea>
-                    
-                    <button type="submit">Submit Feedback</button>
-                </form>
-            </div>
+                <label for="subTopic">Sub Topic:</label>
+                <input type="text" id="subTopic" required>
+                
+                <label for="associateName">Associate User ID:</label>
+                <input type="text" id="associateName" required>
+                
+                <label for="feedbackText">Feedback:</label>
+                <textarea id="feedbackText" placeholder="Enter feedback here..." required></textarea>
+                
+                <button type="submit">Submit Feedback</button>
+            </form>
         </section>
         <section id="searchResults" style="display: none;">
             <h2>Feedback Summary for <span id="summaryAssociateName"></span></h2>
