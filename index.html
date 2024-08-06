@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FL Coaches Corner</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .repeat-coaching-button {
+            background-color: red;
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -67,7 +73,7 @@
                 <select id="topicBulletPoint" required>
                     <option value="UPH">UPH</option>
                     <option value="Shoutout">Shoutout</option>
-                    <option value="Repeat Coaching">Repeat Coaching</option>
+                    <option value="Repeat Coaching" class="repeat-coaching-button">Repeat Coaching</option>
                     <option value="Coaching">Coaching</option>
                     <option value="Training">Training</option>
                 </select>
@@ -454,6 +460,9 @@
               button.textContent = topic;
               button.onclick = () => displayDetails(topics[topic]);
               button.className = 'topicButton';
+              if (topic === 'Repeat Coaching') {
+                button.classList.add('repeat-coaching-button');
+              }
               topicCell.appendChild(button);
               row.insertCell(1).textContent = topics[topic].length;
             }
@@ -521,10 +530,24 @@
           const actionCell = cells[6];
 
           dateCell.innerHTML = `<input type="date" value="${dateCell.textContent}">`;
-          topicCell.innerHTML = `<input type="text" value="${topicCell.textContent}">`;
+          topicCell.innerHTML = `
+            <select>
+              <option value="UPH" ${topicCell.textContent === 'UPH' ? 'selected' : ''}>UPH</option>
+              <option value="Shoutout" ${topicCell.textContent === 'Shoutout' ? 'selected' : ''}>Shoutout</option>
+              <option value="Repeat Coaching" ${topicCell.textContent === 'Repeat Coaching' ? 'selected' : ''}>Repeat Coaching</option>
+              <option value="Coaching" ${topicCell.textContent === 'Coaching' ? 'selected' : ''}>Coaching</option>
+              <option value="Training" ${topicCell.textContent === 'Training' ? 'selected' : ''}>Training</option>
+            </select>`;
           subTopicCell.innerHTML = `<input type="text" value="${subTopicCell.textContent}">`;
           feedbackCell.innerHTML = `<textarea>${feedbackCell.textContent}</textarea>`;
-          flSubmittedCell.innerHTML = `<input type="text" value="${flSubmittedCell.textContent}">`;
+          flSubmittedCell.innerHTML = `
+            <select>
+              <option value="SANJAY" ${flSubmittedCell.textContent === 'SANJAY' ? 'selected' : ''}>SANJAY</option>
+              <option value="SHABNAM" ${flSubmittedCell.textContent === 'SHABNAM' ? 'selected' : ''}>SHABNAM</option>
+              <option value="GIANCARLO" ${flSubmittedCell.textContent === 'GIANCARLO' ? 'selected' : ''}>GIANCARLO</option>
+              <option value="ANKUSH" ${flSubmittedCell.textContent === 'ANKUSH' ? 'selected' : ''}>ANKUSH</option>
+              <option value="DELL" ${flSubmittedCell.textContent === 'DELL' ? 'selected' : ''}>DELL</option>
+            </select>`;
           associateNameCell.innerHTML = `<input type="text" value="${associateNameCell.textContent}">`;
 
           const saveButton = document.createElement('button');
@@ -533,10 +556,10 @@
           saveButton.onclick = () => {
             const updatedFeedback = {
               date: dateCell.querySelector('input').value,
-              topic: topicCell.querySelector('input').value,
+              topic: topicCell.querySelector('select').value,
               subTopic: subTopicCell.querySelector('input').value,
               feedback: feedbackCell.querySelector('textarea').value,
-              flSubmitted: flSubmittedCell.querySelector('input').value,
+              flSubmitted: flSubmittedCell.querySelector('select').value,
               associateName: associateNameCell.querySelector('input').value
             };
 
