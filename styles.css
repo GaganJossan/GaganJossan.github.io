@@ -98,11 +98,17 @@ main {
 }
 
 form {
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.9);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     margin-bottom: 20px;
+}
+
+#feedbackFormSection {
+    background: url('https://images.pexels.com/photos/346529/pexels-photo-346529.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center center/cover;
+    padding: 40px;
+    border-radius: 8px;
 }
 
 label {
@@ -381,7 +387,7 @@ th {
 }
 
 #loginFormSection h2 {
-    color: #F44336;
+    color: white;
     font-size: 36px;
     margin-bottom: 20px;
 }
